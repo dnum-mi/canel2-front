@@ -29,17 +29,6 @@ read_secret:
   extends:
     - .vault:read_secret
 
-
-build_front:
-  variables:
-    BUILD_IMAGE_NAME:
-    NODE_INSTALL_COMMAND: 
-    NODE_BUILD_COMMAND: 
-    WORKING_DIR: ""
-  stage: build-app
-  extends:
-    - .node:build
-
 docker-build:
   variables:
     WORKING_DIR: "."
