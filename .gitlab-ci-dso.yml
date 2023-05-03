@@ -22,8 +22,6 @@ variables:
 
 stages:
   - read-secret
-  - quality-app
-  - build-app
   - docker-build
 
 read_secret:
