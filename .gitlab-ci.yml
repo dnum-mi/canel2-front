@@ -1,0 +1,51 @@
+include:
+  - local: "/includes/node.yml"
+  - local: "/includes/docker.yml"
+  - local: "/includes/vault.yml"
+  - local: "/includes/rules.yml"
+
+default:
+  image: alpine:latest
+#  tags:
+#    - ADD_CUSTOM_TAG_HERE
+
+cache:
+  paths:
+    - .m2/repository/
+    - node_modules
+
+variables:
+  # TAG: "${CI_COMMIT_REF_SLUG}"
+  DOCKERFILE: Dockerfile
+  REGISTRY_URL: "${QUAY_ROOT_URL}/${PROJECT_PATH}"
+
+
+stages:
+  - read-secret
+  - quality-app
+  - build-app
+  - docker-build
+
+read_secret:
+  stage: read-secret
+  extends:
+    - .vault:read_secret
+
+
+build_front:
+  variables:
+    BUILD_IMAGE_NAME: node:
+    NODE_INSTALL_COMMAND: 
+    NODE_BUILD_COMMAND: 
+    WORKING_DIR: ""
+  stage: build-app
+  extends:
+    - .node:build
+
+docker-build:
+  variables:
+    WORKING_DIR: "."
+    IMAGE_NAME: canel2-front
+  stage: docker-build
+  extends:
+    - .buildah:build
