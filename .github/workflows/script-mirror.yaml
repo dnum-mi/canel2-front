@@ -1,0 +1,33 @@
+name: Repo sync with Cloud π Native
+
+on:
+  push:
+    branches:
+      - "dev"
+  workflow_dispatch:
+
+jobs:
+  mirror:
+    name: Sync repo with Cloud π Native
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checks-out repository
+        uses: actions/checkout@v3
+      - name: Send a sync request to DSO api
+        run: |
+          curl -X POST --fail -F token=glptt-7c6e2cc3f0ab685dc051c1c36711cd63145e9ebf -F ref=master --form "variables[GIT_BRANCH_DEPLOY]=dev" https://gitlab-op.apps.ocp4-8.infocepo.com/api/v4/projects/465/trigger/pipeline
+
+# jobs:
+#   mirror:
+#     name: Sync repo with Cloud π Native
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Checks-out repository
+#         uses: actions/checkout@v3
+#       - name: Send a sync request to DSO api
+#         run: |
+#           sh ./path/to/script-mirror.sh \
+#             -a ${{ secrets.API_DOMAIN }} \
+#             -g ${{ secrets.GITLAB_TRIGGER_TOKEN }} \
+#             -k ${{ secrets.CONSUMER_KEY }} \
+#             -s ${{ secrets.CONSUMER_SECRET }}
