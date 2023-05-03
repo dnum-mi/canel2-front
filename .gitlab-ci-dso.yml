@@ -32,7 +32,7 @@ read_secret:
 
 build_front:
   variables:
-    BUILD_IMAGE_NAME: node:
+    BUILD_IMAGE_NAME:
     NODE_INSTALL_COMMAND: 
     NODE_BUILD_COMMAND: 
     WORKING_DIR: ""
