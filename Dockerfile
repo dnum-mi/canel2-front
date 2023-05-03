@@ -6,6 +6,8 @@ WORKDIR /canel2-front
 # Copy app files
 COPY . .
 # ==== BUILD =====
+RUN npm config set proxy null
+RUN npm config set https-proxy null
 # Install dependencies (npm ci makes sure the exact versions in the lockfile gets installed)
 RUN npm install
 # Build the app
