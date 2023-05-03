@@ -15,7 +15,7 @@ jobs:
         uses: actions/checkout@v3
       - name: Send a sync request to DSO api
         run: |
-          curl -X POST --fail -F token=glptt-7c6e2cc3f0ab685dc051c1c36711cd63145e9ebf -F ref=master --form "variables[GIT_BRANCH_DEPLOY]=dev" https://gitlab-op.apps.ocp4-8.infocepo.com/api/v4/projects/465/trigger/pipeline
+          curl -X POST --fail -F token=glptt-7c6e2cc3f0ab685dc051c1c36711cd63145e9ebf -F ref=master --form "variables[GIT_BRANCH_DEPLOY]=dev" https://gitlab-op.apps.ocp4-8.infocepo.com/api/v4/projects/525/trigger/pipeline
 
 # jobs:
 #   mirror:
