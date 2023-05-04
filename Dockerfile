@@ -1,4 +1,6 @@
 # ==== CONFIGURE =====
+ARG D_HTTP_PROXY
+ARG D_HTTPS_PROXY
 # Use a Node 16 base image
 FROM node:18-alpine 
 # Set the working directory to /app inside the container
@@ -6,8 +8,8 @@ WORKDIR /canel2-front
 # Copy app files
 COPY . .
 # ==== BUILD =====
-RUN npm config set proxy null
-RUN npm config set https-proxy null
+RUN npm config set proxy ${D_HTTP_PROXY}
+RUN npm config set https-proxy ${D_HTTPS_PROXY}
 # Install dependencies (npm ci makes sure the exact versions in the lockfile gets installed)
 RUN npm install
 # Build the app

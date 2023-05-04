@@ -100,3 +100,5 @@
       --context="$CI_PROJECT_DIR/$WORKING_DIR" 
       --dockerfile="$CI_PROJECT_DIR/$WORKING_DIR/$DOCKERFILE" 
       --destination $REGISTRY_URL/$IMAGE_NAME:$TAG
+      --build-arg D_HTTP_PROXY=$HTTP_PROXY
+      --build-arg D_HTTPS_PROXY=$HTTPS_PROXY
