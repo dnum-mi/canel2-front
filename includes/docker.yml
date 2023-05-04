@@ -98,7 +98,7 @@
     - echo "{\"auths\":{\"$REGISTRY_URL\":{\"username\":\"${QUAY_ROBOT_USERNAME}\",\"password\":\"$QUAY_ROBOT_TOKEN\"}}}" > /kaniko/.docker/config.json
     - /kaniko/executor 
       --build-arg http_proxy=$http_proxy
-      --build-arg http_proxy=$https_proxy
+      --build-arg https_proxy=$https_proxy
       --build-arg no_proxy=$no_proxy
       --context="$CI_PROJECT_DIR/$WORKING_DIR" 
       --dockerfile="$CI_PROJECT_DIR/$WORKING_DIR/$DOCKERFILE" 
