@@ -68,3 +68,18 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+### Docker file
+
+Add a dockerfile "Dockerfile.app-nginx" in order to reduce the image size to the essentials (build).
+It's probably necessary to modify nginx configuration file to improve the settings
+
+|Image |Image with multistage|
+|------|--------------|
+|763MB|238MB|
+
+```bash
+docker build ./Dockerfile.app-nginx -t canel2-front-nginx:1.0
+docker run --rm -d -p 8080:80 canel2-front-nginx:1.0
+
+```
