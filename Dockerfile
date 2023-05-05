@@ -8,7 +8,7 @@ ARG https_proxy
 ARG npm_registry
 ARG no_proxy
 
-# Set the working directory to /app inside the container
+# Set the working directory to /canel2-front inside the container
 WORKDIR /canel2-front
 
 # use proxy & private npm registry
@@ -18,7 +18,7 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo "Europe/Paris" > /etc
     npm config delete proxy; \
     npm config set proxy $http_proxy; \
     npm config set https-proxy $https_proxy ; \
-    npm config set no-proxy $no_proxy; \
+    npm config set noproxy $no_proxy; \
     fi ; \
     [ -z "$npm_registry" ] || npm config set registry=$npm_registry ; \
     [ -z "$npm_registry" ] || npm config set strict-ssl false
