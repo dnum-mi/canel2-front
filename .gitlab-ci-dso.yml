@@ -31,8 +31,7 @@ read_secret:
 
 docker-build:
   variables:
-    DOCKERFILE: "Dockerfile"
-    WORKING_DIR: "canel2-front"
+    WORKING_DIR: "canel2"
     IMAGE_NAME: canel2-front
     TAG: latest
   stage: docker-build
