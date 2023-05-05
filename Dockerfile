@@ -37,7 +37,7 @@ ENV NODE_ENV production
 
 FROM nginx:1.19
 
-COPY ./nginx/nginx.conf /etc/nginx/default.conf
+COPY ./nginx/nginx.conf /etc/nginx/nginx.conf
 COPY --from=build /canel2-front/build /usr/share/nginx/html
 
 #no root
