@@ -1,7 +1,7 @@
 
 # ==== CONFIGURE =====
 # Use a Node 16 base image
-FROM node:18-alpine as build
+FROM node:18-alpine as front
 
 ARG http_proxy
 ARG https_proxy
@@ -38,7 +38,7 @@ ENV NODE_ENV production
 FROM nginx:1.19
 
 COPY ./nginx/nginx.conf /etc/nginx/nginx.conf
-COPY --from=build /canel2-front/build /usr/share/nginx/html
+COPY --from=front /canel2-front/build /usr/share/nginx/html
 
 #no root
 RUN touch /var/run/nginx.pid && \
