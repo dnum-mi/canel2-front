@@ -35,7 +35,7 @@ RUN npm run build
 # Set the env to "production"
 ENV NODE_ENV production
 
-FROM nginx:1.19
+FROM nginx:1.24
 
 COPY ./nginx/nginx.conf /etc/nginx/nginx.conf
 COPY --from=front /canel2-front/build /usr/share/nginx/html
