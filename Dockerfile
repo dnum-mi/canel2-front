@@ -37,12 +37,14 @@ ENV NODE_ENV production
 
 FROM nginx:1.24
 
-COPY ./nginx/nginx.conf /etc/nginx/nginx.conf
-COPY --from=front /canel2-front/build /usr/share/nginx/html
+COPY  ./nginx/nginx.conf /etc/nginx/nginx.conf
+COPY  --from=front /canel2-front/build /usr/share/nginx/html
 
 #no root
 RUN touch /var/run/nginx.pid && \
- chown -R nginx:nginx /var/run/nginx.pid /usr/share/nginx/html /var/cache/nginx /var/log/nginx /etc/nginx/conf.d
+ chown -R nginx:root /var/run/nginx.pid /usr/share/nginx/html /var/cache/nginx /var/log/nginx /etc/nginx/conf.d
+RUN chgrp -R root /var/run/nginx.pid /usr/share/nginx/html /var/cache/nginx /var/log/nginx /etc/nginx/conf.d && \
+    chmod -R 775 /var/run/nginx.pid /usr/share/nginx/html /var/cache/nginx /var/log/nginx /etc/nginx/conf.d
 
 USER nginx
 
