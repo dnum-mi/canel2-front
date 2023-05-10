@@ -1,14 +1,14 @@
 
 # ==== CONFIGURE =====
 # Use a Node 16 base image
-FROM node:18-alpine as front
+FROM node:18-alpine as build
 
 ARG http_proxy
 ARG https_proxy
 ARG npm_registry
 ARG no_proxy
 
-# Set the working directory to /canel2-front inside the container
+# Set the working directory to /app inside the container
 WORKDIR /canel2-front
 
 # use proxy & private npm registry
@@ -37,14 +37,11 @@ ENV NODE_ENV production
 
 FROM nginx:1.24
 
-COPY  ./nginx/nginx.conf /etc/nginx/nginx.conf
-COPY  --from=front /canel2-front/build /usr/share/nginx/html
+RUN  touch /var/run/nginx.pid && \
+     chown -R nginx:nginx /var/cache/nginx /var/run/nginx.pid
 
-#no root
-RUN touch /var/run/nginx.pid && \
- chown -R nginx:root /var/run/nginx.pid /usr/share/nginx/html /var/cache/nginx /var/log/nginx /etc/nginx/conf.d
-RUN chgrp -R root /var/run/nginx.pid /usr/share/nginx/html /var/cache/nginx /var/log/nginx /etc/nginx/conf.d && \
-    chmod -R 775 /var/run/nginx.pid /usr/share/nginx/html /var/cache/nginx /var/log/nginx /etc/nginx/conf.d
+COPY --chown=nginx:nginx --from=front /canel2-front/build /usr/share/nginx/html
+COPY --chown=nginx:nginx ./nginx/nginx.conf /etc/nginx/conf.d/default.conf
 
 USER nginx
 
