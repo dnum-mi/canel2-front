@@ -1,14 +1,14 @@
 
 # ==== CONFIGURE =====
 # Use a Node 16 base image
-FROM node:18-alpine as build
+FROM node:18-alpine as front
 
 ARG http_proxy
 ARG https_proxy
 ARG npm_registry
 ARG no_proxy
 
-# Set the working directory to /app inside the container
+# Set the working directory to /canel2-front inside the container
 WORKDIR /canel2-front
 
 # use proxy & private npm registry
@@ -35,14 +35,14 @@ RUN npm run build
 # Set the env to "production"
 ENV NODE_ENV production
 
-FROM nginx:1.24
+FROM bitnami/nginx:latest   
 
-RUN  touch /var/run/nginx.pid && \
-     chown -R nginx:nginx /var/cache/nginx /var/run/nginx.pid
-
-COPY --chown=nginx:nginx --from=front /canel2-front/build /usr/share/nginx/html
-COPY --chown=nginx:nginx ./nginx/nginx.conf /etc/nginx/conf.d/default.conf
-
-USER nginx
-
+COPY  ./nginx/nginx.conf /opt/bitnami/nginx/conf/server.conf
+COPY  --from=front /canel2-front/build /opt/bitnami/nginx/html
+# RUN touch /var/run/nginx.pid
+# RUN chown -R nginx:nginx /var/run/nginx.pid /var/cache/nginx /var/log/nginx /etc/nginx/conf.d
+# # RUN chgrp -R root /usr/share/nginx/html /var/run/nginx.pid /var/cache/nginx /var/log/nginx /etc/nginx/conf.d
+# RUN    chmod -R 775 /usr/share/nginx/html /var/run/nginx.pid /var/cache/nginx /var/log/nginx /etc/nginx/conf.d
+USER 101
+EXPOSE 3000
 CMD ["nginx", "-g", "daemon off;"]
