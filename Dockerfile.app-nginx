@@ -35,10 +35,9 @@ RUN npm run build
 # Set the env to "production"
 ENV NODE_ENV production
 
-FROM bitnami/nginx:1.24.0   
+FROM bitnami/nginx:1.24.0 
 
-#conservation temporaire de ces 2 lignes
-#COPY ./nginx/nginx.conf /etc/nginx/default.conf
-#COPY --from=build /canel2-front/build /usr/share/nginx/html
+# Add a new configuration
+# COPY ./nginx/nginx.conf /opt/bitnami/nginx/conf/server_blocks/my_server_block.conf
 
 COPY --from=build /canel2-front/build /app
