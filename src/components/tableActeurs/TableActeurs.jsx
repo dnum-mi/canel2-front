@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { getData, postData, updateData } from '../../Api/Request';
+import { getData, postData, updateData } from '../../Api/Request.js';
 import TableData from "../table/TableData";
 import { Button } from "@codegouvfr/react-dsfr/Button";
 import FormPost from "../FormPost/FormPost";
