@@ -6,7 +6,7 @@ import TableActeurs from "./components/tableActeurs/TableActeurs";
 import TableMigrations from "./components/tableMigrations/TableMigrations";
 import TableInterfaces from "./components/TableInterfaces/TableInterfaces";
 import TableTechnologies from "./components/TableTechnologies/TableTechnologies";
-import TableComformites from "./components/TableConformites/TableConformites";
+import TableConformites from "./components/TableConformites/TableConformites";
 import TableEnvironnements from "./components/TableEnvironnements/TableEnvironnements";
 
 
@@ -38,7 +38,7 @@ class App extends Component {
     } else if (index === 4) {
       this.setState({ showTable: <TableTechnologies /> });
     } else if (index === 5) {
-      this.setState({ showTable: <TableComformites /> });
+      this.setState({ showTable: <TableConformites /> });
     } else if (index === 6) {
       this.setState({ showTable: <TableEnvironnements /> });
     } else {

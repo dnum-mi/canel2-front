@@ -8,7 +8,6 @@ import FormUpdate from "../FormUpdate/FormUpdate";
 import Pagination from "../Pagination";
 import { TECHNOLOGIE_INPUT_TYPES, TECHNOLOGIE_LABEL} from "../FormsModels/FormsModels"
 
-
 class TableTechnologies extends Component {
   constructor(props) {
     super(props);
@@ -188,8 +187,7 @@ class TableTechnologies extends Component {
             <button onClick={this.handleOpenModal} className="fr-btn" data-fr-opened="false" aria-controls="fr-modal-1">
               Ajouter
             </button>
-            <FormPost onSave={this.handleSave} model={TECHNOLOGIE_INPUT_TYPES} label={TECHNOLOGIE_LABEL}/>
-          </div>
+            <FormPost onSave={this.handleSave} model={TECHNOLOGIE_INPUT_TYPES} label={TECHNOLOGIE_LABEL}/>          </div>
           <div className="button-container-get">
             <button onClick={this.handleOpenModalGet} className="fr-btn" data-fr-opened="false" aria-controls="fr-modal-1-get">
               Obtenir Infos

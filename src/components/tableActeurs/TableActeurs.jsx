@@ -47,7 +47,6 @@ class TableActeurs extends Component {
       .then(response => {
         let totalItems = response.count
         let filtered_data = response.map(this.filter_headers);
-
       
         const totalPages = Math.ceil(totalItems / itemsPerPage);
         this.setState({
@@ -83,10 +82,6 @@ class TableActeurs extends Component {
       currentPage: pageNumber
     });
   }
-
-  handlePagination = (pageNumber) => {
-    this.setState({ currentPage: pageNumber });
-  };
 
     handleOpenModal() {
         const modal = document.getElementById('fr-modal-1');
@@ -170,6 +165,8 @@ class TableActeurs extends Component {
             return {}
         }
         const selected_fields = [
+
+          
             'nom_acteur',
             'description',
             'acteurs_statut',
@@ -206,8 +203,7 @@ class TableActeurs extends Component {
             <button onClick={this.handleOpenModal} className="fr-btn" data-fr-opened="false" aria-controls="fr-modal-1">
               Ajouter
             </button>
-            <FormPost onSave={this.handleSave} model={ACTEUR_INPUT_TYPES} label={ACTEUR_LABEL} table='acteurs/'/>
-          </div>
+            <FormPost onSave={this.handleSave} model={ACTEUR_INPUT_TYPES} label={ACTEUR_LABEL} table='acteurs/'/>          </div>
           <div className="button-container-get">
             <button onClick={this.handleOpenModalGet} className="fr-btn" data-fr-opened="false" aria-controls="fr-modal-1-get">
               Obtenir Infos

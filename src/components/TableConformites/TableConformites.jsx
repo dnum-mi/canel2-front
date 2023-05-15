@@ -69,10 +69,6 @@ class TableConformites extends Component {
     });
   }
 
-  handlePagination = (pageNumber) => {
-    this.setState({ currentPage: pageNumber });
-  };
-
     handleOpenModal() {
         const modal = document.getElementById('fr-modal-1');
         modal.showModal();
