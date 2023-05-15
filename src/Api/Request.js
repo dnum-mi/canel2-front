@@ -13,8 +13,10 @@ const header_csrf = {"X-CSRFTOKEN": "<csrf_token_very_long_string_goes_here>"}
 
 // export const API_BASE_URL = 'http://192.168.8.72:8000/canel/api/v1';
 // export const API_BASE_URL2 = 'http://192.168.8.72:8000';
-export const API_BASE_URL = 'http://localhost:8000/canel/api/v1';
-export const API_BASE_URL2 = 'http://localhost:8000';
+// export const API_BASE_URL = 'http://localhost:8000/canel/api/v1';
+// export const API_BASE_URL2 = 'http://localhost:8000';
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
+const API_BASE_URL2 = process.env.REACT_APP_API_BASE_URL2;
 
 export async function getData(endpoint) {
   return axios.get(`${API_BASE_URL}/${endpoint}`)

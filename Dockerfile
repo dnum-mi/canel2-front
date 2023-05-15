@@ -29,20 +29,26 @@ COPY . .
 # ==== BUILD =====
 # Install dependencies (npm ci makes sure the exact versions in the lockfile gets installed)
 RUN npm install
-# Build the app
-RUN npm run build
+
 # ==== RUN =======
 # Set the env to "production"
 ENV NODE_ENV production
+ENV REACT_APP_API_BASE_URL ${REACT_APP_API_BASE_URL}
+ENV REACT_APP_API_BASE_URL2 ${REACT_APP_API_BASE_URL2}
 
-FROM bitnami/nginx:latest   
+# Build the app
+RUN npm run build
 
-COPY  ./nginx/nginx.conf /opt/bitnami/nginx/conf/server.conf
-COPY  --from=front /canel2-front/build /opt/bitnami/nginx/html
+
+FROM bitnami/nginx:1.24.0   
+
+# COPY  ./nginx/nginx.conf /opt/bitnami/nginx/conf/server.conf
+# COPY  --from=front /canel2-front/build /opt/bitnami/nginx/html
+COPY --from=build /canel2-front/build /app
 # RUN touch /var/run/nginx.pid
 # RUN chown -R nginx:nginx /var/run/nginx.pid /var/cache/nginx /var/log/nginx /etc/nginx/conf.d
 # # RUN chgrp -R root /usr/share/nginx/html /var/run/nginx.pid /var/cache/nginx /var/log/nginx /etc/nginx/conf.d
 # RUN    chmod -R 775 /usr/share/nginx/html /var/run/nginx.pid /var/cache/nginx /var/log/nginx /etc/nginx/conf.d
-USER 101
-EXPOSE 3000
+# USER 101
+# EXPOSE 3000
 CMD ["nginx", "-g", "daemon off;"]
