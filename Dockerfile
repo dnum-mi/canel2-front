@@ -1,7 +1,7 @@
 
 # ==== CONFIGURE =====
 # Use a Node 16 base image
-FROM node:18-alpine as front
+FROM node:18-alpine as build
 
 ARG http_proxy
 ARG https_proxy
@@ -40,7 +40,7 @@ ENV REACT_APP_API_BASE_URL2 ${REACT_APP_API_BASE_URL2}
 RUN npm run build
 
 
-FROM bitnami/nginx:1.24.0   
+FROM bitnami/nginx:latest   
 
 # COPY  ./nginx/nginx.conf /opt/bitnami/nginx/conf/server.conf
 # COPY  --from=front /canel2-front/build /opt/bitnami/nginx/html
@@ -51,4 +51,4 @@ COPY --from=build /canel2-front/build /app
 # RUN    chmod -R 775 /usr/share/nginx/html /var/run/nginx.pid /var/cache/nginx /var/log/nginx /etc/nginx/conf.d
 # USER 101
 # EXPOSE 3000
-CMD ["nginx", "-g", "daemon off;"]
+# CMD ["nginx", "-g", "daemon off;"]
