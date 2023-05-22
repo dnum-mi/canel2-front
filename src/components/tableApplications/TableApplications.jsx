@@ -7,7 +7,7 @@ import FormGet from "../FormGet/FormGet";
 import FormUpdate from "../FormUpdate/FormUpdate";
 import Pagination from "../Pagination";
 import './TableApplications.css';
-import { APPLICATION_INPUT_TYPES, APPLICATION_LABEL } from "../FormsModels/FormsModels";
+import { APPLICATION_INPUT_TYPES, APPLICATION_LABEL, APPLICATIONS_SELECT_ROUTES } from "../FormsModels/FormsModels";
 
 
 class TableApplications extends Component {
@@ -193,7 +193,13 @@ class TableApplications extends Component {
           <button onClick={this.handleOpenModalPost} className="fr-btn" data-fr-opened="false" aria-controls="fr-modal-1">
             Ajouter
           </button>
-          <FormPost onSave={this.handleSave} model={APPLICATION_INPUT_TYPES} label={APPLICATION_LABEL} table='applications/'/>
+          <FormPost 
+            onSave={this.handleSave} 
+            model={APPLICATION_INPUT_TYPES} 
+            label={APPLICATION_LABEL} 
+            table='applications/'
+            routes={APPLICATIONS_SELECT_ROUTES}
+          />
         </div>
         <div className="button-container-get">
           <button onClick={this.handleOpenModalGet} className="fr-btn" data-fr-opened="false" aria-controls="fr-modal-1-get">

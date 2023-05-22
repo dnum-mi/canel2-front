@@ -29,6 +29,10 @@ export const ACTEUR_LABEL = {
     'type_acteur':"Type de l'acteur"
 };
 
+export const ACTEUR_SELECT_ROUTES = {
+    'type_acteur': 'type_acteur/'
+}
+
 /*
     Application model
 */
@@ -55,7 +59,7 @@ export const APPLICATION_INPUT_TYPES = {
     'acteurs': 'text',
     'conformite': 'select',
     'devops': 'select',
-    'environnements': 'multiselect'
+    'environnements': 'text'
 };
 
 export const APPLICATION_LABEL = {
@@ -83,6 +87,16 @@ export const APPLICATION_LABEL = {
     'devops': 'Devops',
     'environnements': 'Environnements(s)'
 };
+
+export const APPLICATIONS_SELECT_ROUTES = {
+    'application_statut': '',
+    'ministere_responsable': 'ministere/',
+    'organisation_projet': 'organisation/',
+    'sensibilite': 'sensibilite/',
+    'zone_urbanisation': 'zone_urbanisation/',
+    'conformite': 'conformites/',
+    'devops': 'devops/'
+}
 
 /*
     Conformite model

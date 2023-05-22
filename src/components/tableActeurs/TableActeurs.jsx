@@ -7,7 +7,7 @@ import FormGet from "../FormGet/FormGet";
 import FormUpdate from "../FormUpdate/FormUpdate";
 import Pagination from "../Pagination";
 import SidePanel from "../SidePanel/SidePanel";
-import { ACTEUR_INPUT_TYPES, ACTEUR_LABEL} from "../FormsModels/FormsModels"
+import { ACTEUR_INPUT_TYPES, ACTEUR_LABEL, ACTEUR_SELECT_ROUTES} from "../FormsModels/FormsModels"
 
 class TableActeurs extends Component {
   constructor(props) {
@@ -205,7 +205,13 @@ class TableActeurs extends Component {
             <button onClick={this.handleOpenModal} className="fr-btn" data-fr-opened="false" aria-controls="fr-modal-1">
               Ajouter
             </button>
-            <FormPost onSave={this.handleSave} model={ACTEUR_INPUT_TYPES} label={ACTEUR_LABEL} table='acteurs/'/>
+            <FormPost 
+              onSave={this.handleSave} 
+              model={ACTEUR_INPUT_TYPES} 
+              label={ACTEUR_LABEL} 
+              table='acteurs/'
+              routes={ACTEUR_SELECT_ROUTES}
+              />
           </div>
           <div className="button-container-get">
             <button onClick={this.handleOpenModalGet} className="fr-btn" data-fr-opened="false" aria-controls="fr-modal-1-get">

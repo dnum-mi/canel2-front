@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { postData } from '../../Api/Request';
+import { getData, postData } from '../../Api/Request';
 import { Button } from '@codegouvfr/react-dsfr/Button';
 import { Input } from '@codegouvfr/react-dsfr/Input';
 import { RadioButtons } from '@codegouvfr/react-dsfr/RadioButtons';
@@ -22,10 +22,22 @@ class FormPost extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
+  getSelectValues = (routes) => {
+    let data = {}
+    for (let key in routes) {
+      getData(`${routes[key]}`)
+      .then(response => {
+        data[key] = response.results
+      })
+    }
+    return data
+  }
+
   generateForm = (model, label) => {
+    let selectValues = this.getSelectValues(this.props.routes)
+    console.log("BEGIN SELECT ", selectValues)
     const items = [];
     for (let key in model) {
-      console.log('key', key)
       if (model[key] === 'checkbox') {
         items.push(
           <RadioButtons 
@@ -73,28 +85,36 @@ class FormPost extends Component {
         console.log('multiselect')
       };
       if (model[key] == 'select') {
-        items.push(
-          <Select
-            key={key}
-            label={label[key]}
-            className='toto'
-            onChange={(e) => {
-              let newValue = {}
-              newValue[key] = e.target.value
-              this.setState(newValue);
-            }}
-            nativeSelectProps={{
-              
-            }}
-          >
-            <option>Value</option>
-          </Select>
-        )
+        // let optionsValues
+        // console.log("\n selectedvalues ", selectValues)
+        // if (typeof selectValues !== undefined){
+        //   if (typeof selectValues[key] !== undefined) {
+        //     optionsValues = selectValues[key].map(value => {
+        //       <option>{value}</option>
+        //     })
+        //   } else {
+        //     optionsValues = <option>Value</option>
+        //   }
+          items.push(
+            <Select
+              key={key}
+              label={label[key]}
+              className='toto'
+              onChange={(e) => {
+                let newValue = {}
+                newValue[key] = e.target.value
+                this.setState(newValue);
+              }}
+              nativeSelectProps={{
+                
+              }}
+            >
+              {/* { optionsValues } */}
+            </Select>
+          )
+        // }
       };
       if (model[key] == 'text') {
-        console.log('In Form POST:')
-        console.log(key)
-        console.log(model[key])
         items.push(<Input
             label={label[key]}
             key={key}
@@ -118,7 +138,6 @@ class FormPost extends Component {
           }}
         />)
       };
-      console.log('model', model[key])
     }
     return items;
   //   return (
@@ -127,15 +146,21 @@ class FormPost extends Component {
   }
 
   handleSubmit(event, table) {
-    console.log('\n IN HANDLE SUBMIT \n')
-    console.log(table)
     event.preventDefault();
-    console.log(this.state)
-    let data = JSON.stringify(this.state)
+    let data = this.state
+    for (let key in data) {
+      if (data[key] == "") {
+          data[key] = null
+      }
+      if (key == "acteurs" || key == "environnements") {
+        data[key] = [data[key]]
+      }
+    }
+    data = JSON.stringify(data)
      postData(table, data)
       .then(response => console.log(response))
        .catch(error => console.error(error));
-    console.log('END HANDLE SUBMIT');
+    console.log('END HANDLE SUBMIT\n');
   }
 
   render() {
