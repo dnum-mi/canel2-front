@@ -66,14 +66,11 @@ class FormGet extends Component {
   }
 
   handleSubmitGet = () => {
-    console.log('In handle get submit')
     //event.preventDefault();
     //const { nom_application, description, application_statut, date_mise_en_production, ministere_responsable, sensibilite } = this.state;
     //const data = { nom_application, description, application_statut, date_mise_en_production, ministere_responsable, sensibilite };
     getData('applications?nom_application=App_Test')
             .then(response => {
-                    console.log('Receive response');
-                    console.log(response);
                     this.props.parentStateHandler(response.data);
                 }
             )

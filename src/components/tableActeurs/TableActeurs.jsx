@@ -28,7 +28,6 @@ class TableActeurs extends Component {
 
 
   handleRowClick(id) {
-    console.log("Row clicked with ID:", id);
     // récupérer les données de la ligne sélectionnée en utilisant l'ID
     const selectedRowData = this.state.data.find(item => item.id_acteur === id);
     // mettre à jour l'état avec les données de la ligne sélectionnée
@@ -106,7 +105,7 @@ class TableActeurs extends Component {
     handleSave() {
         const form = document.getElementById('form-post');
         const formData = new FormData(form);
-        postData('add/app', formData)
+        postData('acteurs', formData)
             .then(response => console.log(response))
             .catch(error => console.error(error));
     }

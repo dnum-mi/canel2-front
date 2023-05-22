@@ -52,7 +52,7 @@ export const APPLICATION_INPUT_TYPES = {
     'type': 'select',
     'url_public': 'url',
     'zone_urbanisation': 'select',
-    'acteurs': 'multiselect',
+    'acteurs': 'text',
     'conformite': 'select',
     'devops': 'select',
     'environnements': 'multiselect'
