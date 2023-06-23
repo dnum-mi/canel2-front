@@ -12,6 +12,7 @@ import { ACTEUR_INPUT_TYPES, ACTEUR_LABEL} from "../FormsModels/FormsModels"
 class TableActeurs extends Component {
   constructor(props) {
     super(props);
+ 
     this.state = {
       data: [],
       currentPage: 1,
@@ -19,21 +20,24 @@ class TableActeurs extends Component {
       totalItems: 0,
       loading: 'initial',
       selectedRowData: null
+      
     };
-
 
     this.handleRowClick = this.handleRowClick.bind(this);
     this.handleOpenModalUpdate = this.handleOpenModalUpdate.bind(this);
+    
   }
 
 
-  handleRowClick(id) {
+handleRowClick(event, id) {
+  if (event.target.className !== "modifier-icon" && event.target.className !== "supprimer-icon") {
     console.log("Row clicked with ID:", id);
     // récupérer les données de la ligne sélectionnée en utilisant l'ID
     const selectedRowData = this.state.data.find(item => item.id_acteur === id);
     // mettre à jour l'état avec les données de la ligne sélectionnée
     this.setState({ selectedRowData });
   }
+}
 
   componentDidMount() {
     this.fetchData();
@@ -167,13 +171,14 @@ class TableActeurs extends Component {
         const selected_fields = [
 
           
-            'nom_acteur',
-            'description',
-            'acteurs_statut',
-            'date_mise_en_production',
-            'ministere_responsable',
-            'sensibilite',
-            'id_acteur'
+        "id_acteur",
+        "bureau_rattachement",
+        "email_acteur",
+        "entite_rattachement",
+        "nom_acteur",
+        "type_acteur",
+        "rio_acteur"
+            
         ];
         const filtered_headers = Object.keys(data)
             .filter(key => selected_fields.includes(key))
@@ -197,7 +202,13 @@ class TableActeurs extends Component {
   
       return (
         <div className="table-acteurs-container">
-<TableData data={data} onRowClick={this.handleRowClick} handleOpenModalUpdate={this.handleOpenModalUpdate} />
+<TableData
+  data={data}
+  onRowClick={this.handleRowClick}
+  handleOpenModalUpdate={this.handleOpenModalUpdate.bind(this)}
+/>
+
+
           {selectedRowData && <SidePanel selectedItem={selectedRowData} />}          
           <div className="button-container">
             <button onClick={this.handleOpenModal} className="fr-btn" data-fr-opened="false" aria-controls="fr-modal-1">

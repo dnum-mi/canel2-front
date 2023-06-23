@@ -9,8 +9,6 @@ class HeaderApp extends Component {
   };
 
   handleLogout = () => {
-    // Perform logout action (e.g. remove session information)
-    // Redirect user to homepage
     window.location.replace("/");
   };
 

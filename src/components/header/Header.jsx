@@ -11,7 +11,7 @@ class HeaderApp extends Component {
           target: "_self",
           onClick: () => this.handleNavigationClick(0),
         },
-        text: "Applications",
+        text: "Accueil",
       },
       {
         isActive: false,
@@ -20,7 +20,7 @@ class HeaderApp extends Component {
           target: "_self",
           onClick: () => this.handleNavigationClick(1),
         },
-        text: "Acteurs",
+        text: "Applications",
       },
       {
         isActive: false,
@@ -29,7 +29,7 @@ class HeaderApp extends Component {
           target: "_self",
           onClick: () => this.handleNavigationClick(2),
         },
-        text: "Migrations",
+        text: "Acteurs",
       },
       {
         isActive: false,
@@ -38,7 +38,7 @@ class HeaderApp extends Component {
           target: "_self",
           onClick: () => this.handleNavigationClick(3),
         },
-        text: "Interfaces",
+        text: "Migrations",
       },
       {
         isActive: false,
@@ -47,7 +47,7 @@ class HeaderApp extends Component {
           target: "_self",
           onClick: () => this.handleNavigationClick(4),
         },
-        text: "Technologies",
+        text: "Interfaces",
       },
       {
         isActive: false,
@@ -56,7 +56,7 @@ class HeaderApp extends Component {
           target: "_self",
           onClick: () => this.handleNavigationClick(5),
         },
-        text: "Conformites",
+        text: "Technologies",
       },
       {
         isActive: false,
@@ -65,10 +65,21 @@ class HeaderApp extends Component {
           target: "_self",
           onClick: () => this.handleNavigationClick(6),
         },
+        text: "Conformites",
+      },
+      {
+        isActive: false,
+        linkProps: {
+          href: "#",
+          target: "_self",
+          onClick: () => this.handleNavigationClick(7),
+        },
         text: "Environnements",
       },
+   
     ],
   };
+
 
   handleNavigationClick = (index) => {
     const navigation = [...this.state.navigation];
@@ -77,46 +88,48 @@ class HeaderApp extends Component {
     });
     this.setState({ navigation });
 
-
     if (this.props.onNavigationClick) {
       this.props.onNavigationClick(index, navigation);
     }
   };
 
+  handleHeaderClick = () => {
+    window.location.replace("/"); // Redirige vers la page d'accueil
+  };
+
   handleLogout = () => {
-    // Perform logout action (e.g. remove session information)
-    // Redirect user to homepage
-    window.location.replace("/");
+    localStorage.setItem("isConnected", "false");
+    window.location.replace("/login");
   };
 
   render() {
     return (
       <Header
-        brandTop={<>Ministère <br />de l'Intérieur <br />et des outre mer</>}
-        homeLinkProps={{
-          href: "/",
-          title:
-            "Accueil - Nom de l’entité (ministère, secrétariat d‘état, gouvernement)",
-        }}
-        navigation={this.state.navigation.map((item) => ({
-          ...item,
-          className: item.isActive ? "fr-link--active" : "",
-        }))}
-        quickAccessItems={[
-          {
-            iconId: "fr-icon-lock-line",
-            linkProps: {
-              href: "#",
-            },
-            text: "Se déconnecter",
+      brandTop={<>Ministère <br />de l'Intérieur <br />et des outre mer</>}
+      homeLinkProps={{
+        href: "/",
+        title: "Accueil - Nom de l’entité (ministère, secrétariat d‘état, gouvernement)",
+        onClick: this.handleHeaderClick, // Ajout de la fonction de redirection
+      }}
+      navigation={this.state.navigation.map((item) => ({
+        ...item,
+        className: item.isActive ? "fr-link--active" : "",
+      }))}
+      quickAccessItems={[
+        {
+          iconId: "fr-icon-lock-line",
+          linkProps: {
+            href: "#",
             onClick: this.handleLogout,
           },
-        ]}
-        serviceTagline="Direction du Numérique"
-        serviceTitle="Secrétariat Général"
-      />
-    );
-  }
+          text: "Se déconnecter",
+        },
+      ]}
+      serviceTagline="Direction du Numérique"
+      serviceTitle="Secrétariat Général"
+    />
+  );
+}
 }
 
 export default HeaderApp;

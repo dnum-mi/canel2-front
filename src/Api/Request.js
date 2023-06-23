@@ -1,13 +1,13 @@
 import axios from 'axios';
 
 const headers = {
-  'Access-Control-Allow-Origin': '*',
+  // 'Access-Control-Allow-Origin': '*',
   'Accept': 'application/json',
   'Content-Type': 'application/json'
 };
 
-export const API_BASE_URL = 'http://canel2.apps.ocp4-8.infocepo.com/canel/api/v1';
-// export const API_BASE_URL2 = 'http://192.168.8.72:8000';
+// export const API_BASE_URL = 'http://canel2.apps.ocp4-8.infocepo.com/canel/api/v1';
+export const API_BASE_URL = 'http://localhost:8000/canel/api/v1';
 
 export async function getData(endpoint) {
   return axios.get(`${API_BASE_URL}/${endpoint}`, { headers })
