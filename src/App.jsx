@@ -8,8 +8,7 @@ import TableInterfaces from "./components/TableInterfaces/TableInterfaces";
 import TableTechnologies from "./components/TableTechnologies/TableTechnologies";
 import TableComformites from "./components/TableConformites/TableConformites";
 import TableEnvironnements from "./components/TableEnvironnements/TableEnvironnements";
-
-
+import { getToken, storeTokens } from './Api/Request';
 
 class App extends Component {
   constructor(props) {
@@ -18,9 +17,16 @@ class App extends Component {
       activeTab: "table",
       showTable: null,
       isConnected: false,
-
     };
   }
+
+  // componentDidMount() {
+  //   // Vérifier si le token est présent dans le LocalStorage
+  //   const token = localStorage.getItem("token");
+  //   if (token) {
+  //     this.setState({ isConnected: true, showTable: <TableApplications /> });
+  //   }
+  // }
 
   handleTabClick = (tabName) => {
     this.setState({ activeTab: tabName });
@@ -46,16 +52,44 @@ class App extends Component {
     }
   };
 
-  handleFormConnect = (event) => {
+  handleFormSubmit = (event) => {
     event.preventDefault();
     const username = event.target.elements.username.value;
     const password = event.target.elements.password.value;
-    if (username === "test" && password === "test") {
-      this.setState({ isConnected: true, showTable: <TableApplications /> });
-    } else {
-      alert("Identifiants incorrects !");
-    }
+
+    this.authenticateUser(username, password);
   };
+
+  authenticateUser = (username, password) => {
+    getToken(username, password)
+      .then(response => {
+        console.log("hhhh", response);
+        if (response && response.access) {
+          console.log("mmmm", response.access);
+          // Stocker le token dans le LocalStorage
+         storeTokens(response.access);
+          console.log("bhou !!", localStorage.key(0), localStorage.getItem(localStorage.key(0)))
+          for (let i = 0; i < localStorage.length; i++)   {
+            console.log(localStorage.key(i) + "=[" + localStorage.getItem(localStorage.key(i)) + "]");
+        }
+          this.setState({ isConnected: true, showTable: <TableApplications /> });
+        } else {
+          alert("Nom d'utilisateur ou mot de passe incorrect !");
+        }
+      })
+      .catch(error => {
+        console.error('Erreur lors de l\'authentification:', error);
+        alert('Une erreur s\'est produite lors de l\'authentification.');
+      });
+  };
+
+  handleLogout = () => {
+    // Supprimer le token du LocalStorage
+    localStorage.removeItem("token");
+    // Mettre à jour l'état pour déconnecter l'utilisateur
+    this.setState({ isConnected: false });   
+  };
+  
 
   renderMainContent() {
     const { isConnected } = this.state;
@@ -71,7 +105,7 @@ class App extends Component {
                       <div className="fr-mb-6v">
                       </div>
                       <div>
-                        <form id="login-1760" onSubmit={this.handleFormConnect}>
+                        <form id="login-1760" onSubmit={this.handleFormSubmit}>
                           <fieldset className="fr-fieldset" id="login-1760-fieldset" aria-labelledby="login-1760-fieldset-legend login-1760-fieldset-messages">
                             <div className="fr-fieldset__element">
                               <fieldset className="fr-fieldset" id="credentials" aria-labelledby="credentials-messages">
@@ -149,7 +183,7 @@ class App extends Component {
     } else {
       return (
         <main className="fr-pt-md-14v" role="main" id="content">
-          <HeaderApp onNavigationClick={this.handleNavigationClick} />
+          <HeaderApp onNavigationClick={this.handleNavigationClick} handleLogout={this.handleLogout} />
           {this.state.showTable}
         </main>
       );

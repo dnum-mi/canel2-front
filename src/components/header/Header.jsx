@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Header } from "@codegouvfr/react-dsfr/Header";
+import { getToken, storeTokens, getData } from '../../Api/Request';
 
 class HeaderApp extends Component {
   state = {
@@ -71,12 +72,11 @@ class HeaderApp extends Component {
   };
 
   handleNavigationClick = (index) => {
-    const navigation = [...this.state.navigation];
-    navigation.forEach((item, i) => {
-      item.isActive = i === index;
-    });
+    const navigation = this.state.navigation.map((item, i) => ({
+      ...item,
+      isActive: i === index,
+    }));
     this.setState({ navigation });
-
 
     if (this.props.onNavigationClick) {
       this.props.onNavigationClick(index, navigation);
@@ -84,9 +84,11 @@ class HeaderApp extends Component {
   };
 
   handleLogout = () => {
-    // Perform logout action (e.g. remove session information)
-    // Redirect user to homepage
-    window.location.replace("/");
+    // Mettre à jour l'état pour déconnecter l'utilisateur
+    this.props.handleLogout();
+
+    // Rediriger l'utilisateur vers la page de connexion
+     window.location.replace("/");
   };
 
   render() {
@@ -109,8 +111,9 @@ class HeaderApp extends Component {
               href: "#",
             },
             text: "Se déconnecter",
-            onClick: this.handleLogout,
+            onClick: this.handleLogout()
           },
+          
         ]}
         serviceTagline="Direction du Numérique"
         serviceTitle="Secrétariat Général"
