@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Header } from "@codegouvfr/react-dsfr/Header";
+import { getToken, storeTokens, getData } from '../../Api/Request';
 
 class HeaderApp extends Component {
   state = {
@@ -82,10 +83,10 @@ class HeaderApp extends Component {
 
 
   handleNavigationClick = (index) => {
-    const navigation = [...this.state.navigation];
-    navigation.forEach((item, i) => {
-      item.isActive = i === index;
-    });
+    const navigation = this.state.navigation.map((item, i) => ({
+      ...item,
+      isActive: i === index,
+    }));
     this.setState({ navigation });
 
     if (this.props.onNavigationClick) {
@@ -98,38 +99,43 @@ class HeaderApp extends Component {
   };
 
   handleLogout = () => {
-    localStorage.setItem("isConnected", "false");
-    window.location.replace("/login");
-  };
 
+    // Mettre à jour l'état pour déconnecter l'utilisateur
+    this.props.handleLogout();
+
+    // Rediriger l'utilisateur vers la page de connexion
+     window.location.replace("/");
+  };
   render() {
     return (
       <Header
-      brandTop={<>Ministère <br />de l'Intérieur <br />et des outre mer</>}
-      homeLinkProps={{
-        href: "/",
-        title: "Accueil - Nom de l’entité (ministère, secrétariat d‘état, gouvernement)",
-        onClick: this.handleHeaderClick, // Ajout de la fonction de redirection
-      }}
-      navigation={this.state.navigation.map((item) => ({
-        ...item,
-        className: item.isActive ? "fr-link--active" : "",
-      }))}
-      quickAccessItems={[
-        {
-          iconId: "fr-icon-lock-line",
-          linkProps: {
-            href: "#",
-            onClick: this.handleLogout,
+
+        brandTop={<>Ministère <br />de l'Intérieur <br />et des outre mer</>}
+        homeLinkProps={{
+          href: "/",
+          title:
+            "Accueil - Nom de l’entité (ministère, secrétariat d‘état, gouvernement)",
+        }}
+        navigation={this.state.navigation.map((item) => ({
+          ...item,
+          className: item.isActive ? "fr-link--active" : "",
+        }))}
+        quickAccessItems={[
+          {
+            iconId: "fr-icon-lock-line",
+            linkProps: {
+              href: "#",
+            },
+            text: "Se déconnecter",
+            onClick: this.handleLogout()
           },
-          text: "Se déconnecter",
-        },
-      ]}
-      serviceTagline="Direction du Numérique"
-      serviceTitle="Secrétariat Général"
-    />
-  );
-}
+          
+        ]}
+        serviceTagline="Direction du Numérique"
+        serviceTitle="Secrétariat Général"
+      />
+    );
+  }
 }
 
 export default HeaderApp;
