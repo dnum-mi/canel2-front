@@ -54,35 +54,35 @@ class FormUpdate extends Component {
                     {/* <Input label="Nom" state="default" name="nom_application" value={nom_application} onChange={(e) => console.log(e.target.value)} stateRelatedMessage="Text de validation / d'explication de l'erreur" />
                     <Input label="Description" state="default" name="description" value={description} onChange={(e) => console.log(e.target.value)}  stateRelatedMessage="Text de validation / d'explication de l'erreur" /> */}
 
-                    <select class="fr-select" id="select" name="select"  value={this.state.application_statut} onChange={(e) => this.setState({ application_statut: e.target.value})}>
-                      <option value="Décommissionnée">Décommissionnée</option>
-                      <option value="En construction" selected>En construction</option>
-                      <option value="En cours de retrait">En cours de retrait</option>
-                      <option value="En production">En production</option>
-                      <option value="Identifiée dans la trajectoire">Identifiée dans la trajectoire</option>
-                      <option value="Mise en extinction">Mise en extinction</option>
-                    </select>
-                    <Input label="Date" state="default" name="date_mise_en_production" value={date_mise_en_production} onChange={(e) => this.setState({ date_mise_en_production: e.target.value})}  stateRelatedMessage="Text de validation / d'explication de l'erreur" />
-                    <select class="fr-select" id="select" name="select" value={this.state.sensibilite} onChange={(e) => this.setState({ sensibilite: e.target.value})}>
-                      <option value="S1" selected>S1</option>
-                      <option value="S2">S2</option>
-                      <option value="S3">S3</option>
-                      <option value="S4">S4</option>
-                    </select>
-                    <select class="fr-select" id="select" name="select" value={this.state.ministere_responsable} onChange={(e) => this.setState({ ministere_responsable: e.target.value})}>
-                      <option value="direction d'information legale et administrative">dir. d'information legale et administrative</option>
-                      <option value="direction interministerielle numerique">dir interministerielle numerique</option>
-                      <option value="mi - gendaremerie nationale">mi - gendaremerie nationale</option>
-                      <option value="mi - préfecture de police">mi - préfecture de police</option>
-                      <option value="ministère affaires sociaux">ministère affaires sociaux</option>
-                      <option value="ministère de l'economie et des finances et de la souveraineté industrielle et numérique">min. de l'economie et des finances et de la souveraineté industrielle et numérique</option>
-                      <option value="ministère de l'education nationale">min. de l'education nationale</option>
-                      <option value="ministere de l'interieur" selected>min. de l'interieur</option>
-                      <option value="ministère de la justice">min. de la justice</option>
-                      <option value="ministère de la transition ecologique et de la cohesion des territoires">min. de la transition ecologique et de la cohesion des territoires</option>
-                      <option value="ministère des affaires etrangères">min. des affaires etrangères</option>
-                      <option value="ministère des armées">min. des armées</option>
-                    </select>
+<select className="fr-select" id="select" name="select" value={application_statut} onChange={(e) => this.setState({ application_statut: e.target.value })}>
+          <option value="Décommissionnée">Décommissionnée</option>
+          <option value="En construction">En construction</option>
+          <option value="En cours de retrait">En cours de retrait</option>
+          <option value="En production">En production</option>
+          <option value="Identifiée dans la trajectoire">Identifiée dans la trajectoire</option>
+          <option value="Mise en extinction">Mise en extinction</option>
+        </select>
+        <Input label="Date" state="default" name="date_mise_en_production" value={date_mise_en_production} onChange={(e) => this.setState({ date_mise_en_production: e.target.value })}  stateRelatedMessage="Text de validation / d'explication de l'erreur" />
+        <select className="fr-select" id="select" name="select" value={sensibilite} onChange={(e) => this.setState({ sensibilite: e.target.value })}>
+          <option value="S1">S1</option>
+          <option value="S2">S2</option>
+          <option value="S3">S3</option>
+          <option value="S4">S4</option>
+        </select>
+        <select className="fr-select" id="select" name="select" value={ministere_responsable} onChange={(e) => this.setState({ ministere_responsable: e.target.value })}>
+          <option value="direction d'information legale et administrative">dir. d'information legale et administrative</option>
+          <option value="direction interministerielle numerique">dir interministerielle numerique</option>
+          <option value="mi - gendaremerie nationale">mi - gendaremerie nationale</option>
+          <option value="mi - préfecture de police">mi - préfecture de police</option>
+          <option value="ministère affaires sociaux">ministère affaires sociaux</option>
+          <option value="ministère de l'economie et des finances et de la souveraineté industrielle et numérique">min. de l'economie et des finances et de la souveraineté industrielle et numérique</option>
+          <option value="ministère de l'education nationale">min. de l'education nationale</option>
+          <option value="ministere de l'interieur">min. de l'interieur</option>
+          <option value="ministère de la justice">min. de la justice</option>
+          <option value="ministère de la transition ecologique et de la cohesion des territoires">min. de la transition ecologique et de la cohesion des territoires</option>
+          <option value="ministère des affaires etrangères">min. des affaires etrangères</option>
+          <option value="ministère des armées">min. des armées</option>
+        </select>
 
                     <Button type="submit">Enregistrer</Button>
                   </form>

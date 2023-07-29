@@ -31,12 +31,11 @@ class TableApplications extends Component {
     const offset = (currentPage - 1) * itemsPerPage;
     getData(`applications?offset=${offset}&limit=${itemsPerPage}`)
       .then(response => {
-        let totalItems = response.length
-        let filtered_data = response.map(this.filter_headers);
-
+        let totalItems = response.results.length;
+        let filtered_data = response.results.map(this.filter_headers);
+  
         const totalPages = Math.ceil(totalItems / itemsPerPage);
         this.setState({
-
           data: filtered_data,
           loading: 'false',
           totalItems,
@@ -45,6 +44,7 @@ class TableApplications extends Component {
       })
       .catch(error => console.error(error));
   };
+   
   
   paginate = (pageNumber) => {
     const startIndex = (pageNumber - 1) * this.state.itemsPerPage;

@@ -62,6 +62,7 @@ class FormPost extends Component {
       if (model[key] === 'checkbox') {
         items.push(
           <RadioButtons
+            key={key} // Ajouter une prop key unique ici
             legend={label[key]}
             options={[
               {
@@ -83,8 +84,8 @@ class FormPost extends Component {
       } else if (model[key] === 'date') {
         items.push(
           <Input
+            key={key} // Ajouter une prop key unique ici
             label={label[key]}
-            key={key}
             nativeInputProps={{
               type: 'date',
             }}
@@ -101,11 +102,11 @@ class FormPost extends Component {
       } else if (model[key] === 'text' || model[key] === 'uuid') {
         items.push(
           <Input
+            key={key} // Ajouter une prop key unique ici
             label={label[key]}
-            key={key}
             name={key}
             value={this.state[key]}
-            onChange={e => this.setState({ [key]: e.target.value })}
+            onChange={(e) => this.setState({ [key]: e.target.value })}
           />
         );
       }

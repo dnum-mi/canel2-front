@@ -17,28 +17,23 @@ export async function getToken(username, password) {
     body: JSON.stringify(data)
   };
 
-   const response = await fetch('http://localhost:8000/api/token/', requestOptions)
-   const jsonresponse = await response.json()
-   return jsonresponse
-    // .then(response => {
-    //   return response.json()
-    // }
-      // if (!response.ok) {
-      //   throw new Error('Request failed with status code ' + response.status);
-      // }
-      // else{
-      //   return response.data
-      // }
-    // )
-  
-
-    // .catch(error => {
-    //   console.error('Error:', error);
-    //   throw error;
-    // });
+  try {
+    const response = await fetch('http://localhost:8000/api/token/', requestOptions);
+    if (!response.ok) {
+      throw new Error('Request failed with status code ' + response.status);
+    }
+    const jsonresponse = await response.json();
+    console.log(jsonresponse); // Vérifier que le token est présent dans la réponse
+    return jsonresponse;
+  } catch (error) {
+    console.error('Error:', error);
+    throw error;
+  }
 }
 
+
 export function storeTokens(tokens) {
+  console.log("zouzou",tokens)
   localStorage.setItem('token', tokens.access);
   localStorage.setItem('refresh_token', tokens.refresh);
 }
@@ -62,8 +57,11 @@ export function postData(endpoint, data) {
   const accessToken = localStorage.getItem('token');
   const headers = {
     'X-CSRFToken': getCSRFToken(),
+    
     'Authorization': `Bearer ${accessToken}`
+    
   };
+  console.log("lol", accessToken)
 
   return axios.post(`${API_BASE_URL}/${endpoint}`, data, { headers })
     .then(response => response.data);

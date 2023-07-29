@@ -4,6 +4,7 @@ import { getData, deleteData } from '../../Api/Request';
 import FormUpdate from '../FormUpdate/FormUpdate';
 import SidePanel from '../SidePanel/SidePanel';
 import Modal from 'react-modal';
+// Vérifier les importations des fichiers SVG pour les icônes et corriger si nécessaire
 import { ReactComponent as EditIcon } from '../../img/ball-pen-line.svg';
 import { ReactComponent as DeleteIcon } from '../../img/delete-bin-line.svg';
 import { ReactComponent as ExportIcon } from '../../img/download-line.svg';
@@ -34,7 +35,6 @@ class TableData extends Component {
       selectedId: null,
       selectedItem: null,
       modalIsOpen: false,
-      elements: [],
       currentElement: null,
     };
   }
@@ -66,19 +66,17 @@ class TableData extends Component {
   };
 
   openUpdateModal = (id) => {
-    const elementToUpdate = this.state.elements.find((element) => element.id === id);
-  
+    const elementToUpdate = this.props.data.find((element) => element.id === id);
+
     if (elementToUpdate) {
       this.setState({
         currentElement: elementToUpdate,
         modalIsOpen: true,
       });
     } else {
-      console.error('Élément non trouvé pour l\'ID :', id);
+      console.error("Élément non trouvé pour l'ID :", id);
     }
   };
-  
-  
 
   renderTableHeader() {
     if (this.props.data && this.props.data[0]) {
@@ -108,8 +106,6 @@ class TableData extends Component {
     let id_key = keys[0];
     let name_key = keys[1];
 
-    this.setState({ elements: elements }); // Ajout de cette ligne
-
     return elements.map((item, index) => {
       let stringResponse;
       return (
@@ -130,34 +126,38 @@ class TableData extends Component {
             } else {
               stringResponse = 'Non renseignée';
             }
-            return <td key={it} className="table-cell" style={{ textAlign: "center" }}>{stringResponse}</td>;
-})}
-<td>
-  {item[id_key] && (
-    <div className="icon-cell">
-      <EditIcon
-        className="edit-icon"
-        onClick={(event) => {
-          event.stopPropagation();
-          this.openUpdateModal(item[id_key]);
-        }}
-      />
-    </div>
-  )}
-</td>
-<td>
-  {item[id_key] && (
-    <div className="icon-cell">
-      <DeleteIcon
-        className="delete-icon"
-        onClick={(event) => {
-          event.stopPropagation();
-          this.handleDelete(item[id_key], item[name_key]);
-        }}
-      />
-    </div>
-  )}
-</td>
+            return (
+              <td key={it} className="table-cell" style={{ textAlign: 'center' }}>
+                {stringResponse}
+              </td>
+            );
+          })}
+          <td>
+            {item[id_key] && (
+              <div className="icon-cell">
+                <EditIcon
+                  className="edit-icon"
+                  onClick={(event) => {
+                    event.stopPropagation();
+                    this.openUpdateModal(item[id_key]);
+                  }}
+                />
+              </div>
+            )}
+          </td>
+          <td>
+            {item[id_key] && (
+              <div className="icon-cell">
+                <DeleteIcon
+                  className="delete-icon"
+                  onClick={(event) => {
+                    event.stopPropagation();
+                    this.handleDelete(item[id_key], item[name_key]);
+                  }}
+                />
+              </div>
+            )}
+          </td>
         </tr>
       );
     });

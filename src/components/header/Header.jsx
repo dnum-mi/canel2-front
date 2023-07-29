@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Header } from "@codegouvfr/react-dsfr/Header";
-import { getToken, storeTokens, getData } from '../../Api/Request';
+// import { getToken, storeTokens, getData } from '../../Api/Request';
 
 class HeaderApp extends Component {
   state = {
@@ -95,17 +95,16 @@ class HeaderApp extends Component {
   };
 
   handleHeaderClick = () => {
-    window.location.replace("/"); // Redirige vers la page d'accueil
+    // window.location.replace("/"); // Redirige vers la page d'accueil
   };
 
   handleLogout = () => {
-
+    // Supprimer le token du LocalStorage
+    localStorage.removeItem("token");
     // Mettre à jour l'état pour déconnecter l'utilisateur
-    this.props.handleLogout();
-
-    // Rediriger l'utilisateur vers la page de connexion
-     window.location.replace("/");
+    this.setState({ isConnected: true });   
   };
+
   render() {
     return (
       <Header
@@ -127,7 +126,7 @@ class HeaderApp extends Component {
               href: "#",
             },
             text: "Se déconnecter",
-            onClick: this.handleLogout()
+            onClick: this.handleLogout
           },
           
         ]}

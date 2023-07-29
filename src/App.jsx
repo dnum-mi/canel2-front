@@ -1,4 +1,3 @@
-
 import React, { Component } from "react";
 import HeaderApp from "./components/header/Header";
 import FooterApp from "./components/footer/Footer";
@@ -9,6 +8,8 @@ import TableInterfaces from "./components/TableInterfaces/TableInterfaces";
 import TableTechnologies from "./components/TableTechnologies/TableTechnologies";
 import TableComformites from "./components/TableConformites/TableConformites";
 import TableEnvironnements from "./components/TableEnvironnements/TableEnvironnements";
+import HomePage from "./components/HomePage/HomePage";
+
 import { getToken, storeTokens } from './Api/Request';
 
 class App extends Component {
@@ -35,19 +36,22 @@ class App extends Component {
 
   handleNavigationClick = (index) => {
     if (index === 0) {
-      this.setState({ showTable: <TableApplications /> });
+      this.setState({ showTable: <HomePage /> });
     } else if (index === 1) {
-      this.setState({ showTable: <TableActeurs /> });
+      this.setState({ showTable: <TableApplications /> });
     } else if (index === 2) {
-      this.setState({ showTable: <TableMigrations /> });
+      this.setState({ showTable: <TableActeurs /> });
     } else if (index === 3) {
-      this.setState({ showTable: <TableInterfaces /> });
+      this.setState({ showTable: <TableMigrations /> });
     } else if (index === 4) {
-      this.setState({ showTable: <TableTechnologies /> });
+      this.setState({ showTable: <TableInterfaces /> });
     } else if (index === 5) {
-      this.setState({ showTable: <TableComformites /> });
+      this.setState({ showTable: <TableTechnologies /> });
     } else if (index === 6) {
+      this.setState({ showTable: <TableComformites /> });
+    } else if (index===7){
       this.setState({ showTable: <TableEnvironnements /> });
+    
     } else {
       this.setState({ showTable: null });
     }
@@ -68,12 +72,13 @@ class App extends Component {
         if (response && response.access) {
           console.log("mmmm", response.access);
           // Stocker le token dans le LocalStorage
-         storeTokens(response.access);
+         storeTokens(response);
+         console.log(localStorage)
           console.log("bhou !!", localStorage.key(0), localStorage.getItem(localStorage.key(0)))
           for (let i = 0; i < localStorage.length; i++)   {
             console.log(localStorage.key(i) + "=[" + localStorage.getItem(localStorage.key(i)) + "]");
         }
-          this.setState({ isConnected: true, showTable: <TableApplications /> });
+           this.setState({ isConnected: true, showTable: <HomePage /> });
         } else {
           alert("Nom d'utilisateur ou mot de passe incorrect !");
         }
@@ -84,12 +89,12 @@ class App extends Component {
       });
   };
 
-  handleLogout = () => {
-    // Supprimer le token du LocalStorage
-    localStorage.removeItem("token");
-    // Mettre à jour l'état pour déconnecter l'utilisateur
-    this.setState({ isConnected: false });   
-  };
+  // handleLogout = () => {
+  //   // Supprimer le token du LocalStorage
+  //   localStorage.removeItem("token");
+  //   // Mettre à jour l'état pour déconnecter l'utilisateur
+  //   this.setState({ isConnected: true });   
+  // };
   
 
   renderMainContent() {
