@@ -61,8 +61,6 @@ export function postData(endpoint, data) {
     'Authorization': `Bearer ${accessToken}`
     
   };
-  console.log("lol", accessToken)
-
   return axios.post(`${API_BASE_URL}/${endpoint}`, data, { headers })
     .then(response => response.data);
 }
@@ -89,21 +87,23 @@ export function updateData(endpoint, data) {
     .then(response => response.data);
 }
 
-function getCSRFToken() {
-  const accessToken = localStorage.getItem('access_token');
+async function getCSRFToken() {
+  const accessToken = localStorage.getItem('token');
   if (!accessToken) {
-    return Promise.resolve('<csrf_token_very_long_string_goes_here>');
+    return '<csrf_token_very_long_string_goes_here>'; // Remplacez par la valeur par défaut du token CSRF
   }
 
   const headers = {
     'Authorization': `Bearer ${accessToken}`
   };
 
-  return axios.get(`${API_BASE_URL}/csrf/`, { headers })
-    .then(response => response.data.csrf_token)
-    .catch(error => {
+  try {
+    const response = await axios.get(`${API_BASE_URL}/csrf/`, { headers });
+    return response.data.csrf_token;
+  } catch (error) {
     console.error('Erreur lors de la récupération du token CSRF:', error);
-    return '<csrf_token_very_long_string_goes_here>';
-  });
+    return '<csrf_token_very_long_string_goes_here>'; // Remplacez par la valeur par défaut du token CSRF
+  }
 }
+
 

@@ -22,14 +22,6 @@ class App extends Component {
     };
   }
 
-  // componentDidMount() {
-  //   // Vérifier si le token est présent dans le LocalStorage
-  //   const token = localStorage.getItem("token");
-  //   if (token) {
-  //     this.setState({ isConnected: true, showTable: <TableApplications /> });
-  //   }
-  // }
-
   handleTabClick = (tabName) => {
     this.setState({ activeTab: tabName });
   };
@@ -49,9 +41,8 @@ class App extends Component {
       this.setState({ showTable: <TableTechnologies /> });
     } else if (index === 6) {
       this.setState({ showTable: <TableComformites /> });
-    } else if (index===7){
+    } else if (index === 7) {
       this.setState({ showTable: <TableEnvironnements /> });
-    
     } else {
       this.setState({ showTable: null });
     }
@@ -68,17 +59,13 @@ class App extends Component {
   authenticateUser = (username, password) => {
     getToken(username, password)
       .then(response => {
-        console.log("hhhh", response);
         if (response && response.access) {
-          console.log("mmmm", response.access);
-          // Stocker le token dans le LocalStorage
-         storeTokens(response);
-         console.log(localStorage)
-          console.log("bhou !!", localStorage.key(0), localStorage.getItem(localStorage.key(0)))
-          for (let i = 0; i < localStorage.length; i++)   {
+          storeTokens(response);
+          console.log(localStorage);
+          for (let i = 0; i < localStorage.length; i++) {
             console.log(localStorage.key(i) + "=[" + localStorage.getItem(localStorage.key(i)) + "]");
-        }
-           this.setState({ isConnected: true, showTable: <HomePage /> });
+          }
+          this.setState({ isConnected: true, showTable: <HomePage /> });
         } else {
           alert("Nom d'utilisateur ou mot de passe incorrect !");
         }
@@ -89,13 +76,12 @@ class App extends Component {
       });
   };
 
-  // handleLogout = () => {
-  //   // Supprimer le token du LocalStorage
-  //   localStorage.removeItem("token");
-  //   // Mettre à jour l'état pour déconnecter l'utilisateur
-  //   this.setState({ isConnected: true });   
-  // };
-  
+  handleLogout = () => {
+    console.log("Tentative de déconnexion...");
+    localStorage.removeItem("token");
+    this.setState({ isConnected: false });
+    console.log("Utilisateur déconnecté :", this.state.isConnected);
+  };
 
   renderMainContent() {
     const { isConnected } = this.state;

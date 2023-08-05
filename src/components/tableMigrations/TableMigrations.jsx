@@ -69,14 +69,18 @@ class TableMigrations extends Component {
     });
   }
 
-    handleOpenModal() {
-        const modal = document.getElementById('fr-modal-1');
-        modal.showModal();
+  handleOpenModal = () => {
+    const modal = document.getElementById('fr-modal-1');
+    if (!modal.open) {
+      modal.showModal();
     }
+  }
 
     handleOpenModalGet() {
         const modal = document.getElementById('fr-modal-1-get');
-        modal.showModal();
+        if (!modal.open) {
+          modal.showModal();
+        }
     }
 
    

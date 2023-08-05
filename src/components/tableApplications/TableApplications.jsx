@@ -19,6 +19,8 @@ class TableApplications extends Component {
       totalItems: 0,
       loading: 'initial'
     };
+ 
+    
   }
 
   componentDidMount() {
@@ -74,12 +76,15 @@ class TableApplications extends Component {
     modal.showModal();
   }
 
-  /*
-    Open modal for GET form
-  */
-  handleOpenModalGet() {
-    const modal = document.getElementById('fr-modal-1-get');
-    modal.showModal();
+  handleOpenModal = () => {
+    const modal = document.getElementById('fr-modal-1');
+    if (!modal.open) {
+      modal.showModal();
+    }
+  }
+  
+  handleCloseModalGet() {
+    this.setState({ isModalOpen: false });
   }
 
 
@@ -184,12 +189,12 @@ class TableApplications extends Component {
               Ajouter
             </button>
 <FormPost onSave={this.handleSave} model={APPLICATION_INPUT_TYPES} label={APPLICATION_LABEL}/>          </div>
-          <div className="button-container-get">
-            <button onClick={this.handleOpenModalGet} className="fr-btn" data-fr-opened="false" aria-controls="fr-modal-1-get">
-              Obtenir Infos
-            </button>
-            <FormGet onSave={this.handleSaveGet} parentStateHandler={this.parentStateHandler} />
-          </div>
+<div className="button-container-get">
+        <button onClick={this.handleOpenModalGet} className="fr-btn" data-fr-opened="false" aria-controls="fr-modal-1-get">
+          Obtenir Infos
+        </button>
+        <FormGet onSave={this.handleSaveGet} parentStateHandler={this.parentStateHandler} />
+      </div>
           <Pagination
             currentPage={currentPage}
             totalPages={totalPages}

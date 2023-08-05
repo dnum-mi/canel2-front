@@ -67,7 +67,7 @@ class TableData extends Component {
 
   openUpdateModal = (id) => {
     const elementToUpdate = this.props.data.find((element) => element.id === id);
-
+  
     if (elementToUpdate) {
       this.setState({
         currentElement: elementToUpdate,
@@ -136,12 +136,12 @@ class TableData extends Component {
             {item[id_key] && (
               <div className="icon-cell">
                 <EditIcon
-                  className="edit-icon"
-                  onClick={(event) => {
-                    event.stopPropagation();
-                    this.openUpdateModal(item[id_key]);
-                  }}
-                />
+  className="edit-icon"
+  onClick={(event) => {
+    event.stopPropagation();
+    this.openUpdateModal(item[id_key]);
+  }}
+/>
               </div>
             )}
           </td>

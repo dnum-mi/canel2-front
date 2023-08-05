@@ -73,22 +73,25 @@ class TableTechnologies extends Component {
     this.setState({ currentPage: pageNumber });
   };
 
-    handleOpenModal() {
-        const modal = document.getElementById('fr-modal-1');
-        modal.showModal();
+  handleOpenModal = () => {
+    const modal = document.getElementById('fr-modal-1');
+    if (!modal.open) {
+      modal.showModal();
     }
+  }
 
     handleOpenModalGet() {
         const modal = document.getElementById('fr-modal-1-get');
-        modal.showModal();
+        if (!modal.open) {
+          modal.showModal();
+        }
     }
-
    
 
     handleSave() {
         const form = document.getElementById('form-post');
         const formData = new FormData(form);
-        postData('add/app', formData)
+        postData('technologies', formData)
             .then(response => console.log(response))
             .catch(error => console.error(error));
     }
