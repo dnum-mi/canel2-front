@@ -191,7 +191,7 @@ export const ENVIRONNEMENT_INPUT_TYPES = {
 export const ENVIRONNEMENT_LABEL = {
     'archivee':'Archivé',
     'cloud_hebergeur':'Cloud hébergeur',
-    'environnement':'Environnement',
+    'environnnement':'Environnement',
     'FIP':'FIP',
     'interface_id':'ID interface',
     'migration':'Migration',

@@ -209,7 +209,7 @@ class TableActeurs extends Component {
               onSave={this.handleSave} 
               model={ACTEUR_INPUT_TYPES} 
               label={ACTEUR_LABEL} 
-              table='acteurs/'
+              table='acteur'
               routes={ACTEUR_SELECT_ROUTES}
               />
           </div>

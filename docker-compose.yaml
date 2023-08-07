@@ -1,0 +1,13 @@
+version: '3.5'
+
+services:
+  front:
+    image: quay.apps.ocp4-8.infocepo.com/ministere-interieur-canel2/canel2-front
+    ports:
+      - "3000:3000"
+    env_file:
+      - ./.env-front.dev
+    # stdin_open: true
+    volumes:
+       - ./canel2-front:/canel2-front
+       - /canel2-front/node_modules

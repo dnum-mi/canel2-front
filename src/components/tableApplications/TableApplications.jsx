@@ -197,7 +197,7 @@ class TableApplications extends Component {
             onSave={this.handleSave} 
             model={APPLICATION_INPUT_TYPES} 
             label={APPLICATION_LABEL} 
-            table='applications/'
+            table='application'
             routes={APPLICATIONS_SELECT_ROUTES}
           />
         </div>
