@@ -1,0 +1,44 @@
+.homepage {
+    text-align: center;
+    padding: 2rem;
+  }
+  
+  .title {
+    font-size: 2.5rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .description,
+  .features-list,
+  .exploration-prompt,
+  .navigation-hint {
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .features-list {
+    text-align: center;
+  }
+  
+  .section {
+    margin-top: 3rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid #ccc;
+  }
+  
+  .section-title {
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+  }
+  
+  .section-description {
+    font-size: 1.4rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .start-button {
+    position: absolute;
+    top: 2rem;
+    right: 2rem;
+  }
+  

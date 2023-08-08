@@ -1,0 +1,13 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+      {
+        "name": "Débogage Chrome",
+        "type": "chrome",
+        "request": "launch",
+        "url": "http://localhost:3000", // Remplacez par l'URL de votre application React
+        "webRoot": "${workspaceFolder}"
+      }
+    ]
+  }
+  

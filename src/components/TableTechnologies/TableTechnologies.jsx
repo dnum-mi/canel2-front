@@ -8,7 +8,6 @@ import FormUpdate from "../FormUpdate/FormUpdate";
 import Pagination from "../Pagination";
 import { TECHNOLOGIE_INPUT_TYPES, TECHNOLOGIE_LABEL} from "../FormsModels/FormsModels"
 
-
 class TableTechnologies extends Component {
   constructor(props) {
     super(props);
@@ -74,22 +73,25 @@ class TableTechnologies extends Component {
     this.setState({ currentPage: pageNumber });
   };
 
-    handleOpenModal() {
-        const modal = document.getElementById('fr-modal-1');
-        modal.showModal();
+  handleOpenModal = () => {
+    const modal = document.getElementById('fr-modal-1');
+    if (!modal.open) {
+      modal.showModal();
     }
+  }
 
     handleOpenModalGet() {
         const modal = document.getElementById('fr-modal-1-get');
-        modal.showModal();
+        if (!modal.open) {
+          modal.showModal();
+        }
     }
-
    
 
     handleSave() {
         const form = document.getElementById('form-post');
         const formData = new FormData(form);
-        postData('add/app', formData)
+        postData('technologies', formData)
             .then(response => console.log(response))
             .catch(error => console.error(error));
     }
@@ -188,8 +190,7 @@ class TableTechnologies extends Component {
             <button onClick={this.handleOpenModal} className="fr-btn" data-fr-opened="false" aria-controls="fr-modal-1">
               Ajouter
             </button>
-            <FormPost onSave={this.handleSave} model={TECHNOLOGIE_INPUT_TYPES} label={TECHNOLOGIE_LABEL}/>
-          </div>
+            <FormPost onSave={this.handleSave} model={TECHNOLOGIE_INPUT_TYPES} label={TECHNOLOGIE_LABEL}/>          </div>
           <div className="button-container-get">
             <button onClick={this.handleOpenModalGet} className="fr-btn" data-fr-opened="false" aria-controls="fr-modal-1-get">
               Obtenir Infos

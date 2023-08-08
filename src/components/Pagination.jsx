@@ -8,7 +8,6 @@ class Pagination extends Component {
 
   render() {
     const { totalItems, itemsPerPage, currentPage } = this.props;
-    console.log(totalItems, itemsPerPage)
     const totalPages = Math.ceil(totalItems / itemsPerPage);
     const maxPagesToShow = 5;
 
@@ -83,7 +82,6 @@ class Pagination extends Component {
               </button>
             </li>
             {renderPageNumbers}
-            /
             {totalPages}
             <li>
               <button

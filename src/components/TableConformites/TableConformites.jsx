@@ -69,18 +69,18 @@ class TableConformites extends Component {
     });
   }
 
-  handlePagination = (pageNumber) => {
-    this.setState({ currentPage: pageNumber });
-  };
-
-    handleOpenModal() {
-        const modal = document.getElementById('fr-modal-1');
-        modal.showModal();
+  handleOpenModal = () => {
+    const modal = document.getElementById('fr-modal-1');
+    if (!modal.open) {
+      modal.showModal();
     }
+  }
 
     handleOpenModalGet() {
         const modal = document.getElementById('fr-modal-1-get');
-        modal.showModal();
+        if (!modal.open) {
+          modal.showModal();
+        }
     }
 
    
@@ -187,11 +187,7 @@ class TableConformites extends Component {
             <button onClick={this.handleOpenModal} className="fr-btn" data-fr-opened="false" aria-controls="fr-modal-1">
               Ajouter
             </button>
-            <FormPost 
-              onSave={this.handleSave} 
-              model={CONFORMITE_INPUT_TYPES} 
-              label={CONFORMITE_LABEL}
-              table='conformite'/>
+            <FormPost onSave={this.handleSave} model={CONFORMITE_INPUT_TYPES} label={CONFORMITE_LABEL}/>
           </div>
           <div className="button-container-get">
             <button onClick={this.handleOpenModalGet} className="fr-btn" data-fr-opened="false" aria-controls="fr-modal-1-get">

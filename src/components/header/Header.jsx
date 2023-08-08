@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Header } from "@codegouvfr/react-dsfr/Header";
 
+
 class HeaderApp extends Component {
   state = {
     navigation: [
@@ -11,7 +12,7 @@ class HeaderApp extends Component {
           target: "_self",
           onClick: () => this.handleNavigationClick(0),
         },
-        text: "Applications",
+        text: "Accueil",
       },
       {
         isActive: false,
@@ -20,7 +21,7 @@ class HeaderApp extends Component {
           target: "_self",
           onClick: () => this.handleNavigationClick(1),
         },
-        text: "Acteurs",
+        text: "Applications",
       },
       {
         isActive: false,
@@ -29,7 +30,7 @@ class HeaderApp extends Component {
           target: "_self",
           onClick: () => this.handleNavigationClick(2),
         },
-        text: "Migrations",
+        text: "Acteurs",
       },
       {
         isActive: false,
@@ -38,7 +39,7 @@ class HeaderApp extends Component {
           target: "_self",
           onClick: () => this.handleNavigationClick(3),
         },
-        text: "Interfaces",
+        text: "Migrations",
       },
       {
         isActive: false,
@@ -47,7 +48,7 @@ class HeaderApp extends Component {
           target: "_self",
           onClick: () => this.handleNavigationClick(4),
         },
-        text: "Technologies",
+        text: "Interfaces",
       },
       {
         isActive: false,
@@ -56,7 +57,7 @@ class HeaderApp extends Component {
           target: "_self",
           onClick: () => this.handleNavigationClick(5),
         },
-        text: "Conformites",
+        text: "Technologies",
       },
       {
         isActive: false,
@@ -65,18 +66,28 @@ class HeaderApp extends Component {
           target: "_self",
           onClick: () => this.handleNavigationClick(6),
         },
+        text: "Conformites",
+      },
+      {
+        isActive: false,
+        linkProps: {
+          href: "#",
+          target: "_self",
+          onClick: () => this.handleNavigationClick(7),
+        },
         text: "Environnements",
       },
+   
     ],
   };
 
-  handleNavigationClick = (index) => {
-    const navigation = [...this.state.navigation];
-    navigation.forEach((item, i) => {
-      item.isActive = i === index;
-    });
-    this.setState({ navigation });
 
+  handleNavigationClick = (index) => {
+    const navigation = this.state.navigation.map((item, i) => ({
+      ...item,
+      isActive: i === index,
+    }));
+    this.setState({ navigation });
 
     if (this.props.onNavigationClick) {
       this.props.onNavigationClick(index, navigation);
@@ -84,14 +95,17 @@ class HeaderApp extends Component {
   };
 
   handleLogout = () => {
-    // Perform logout action (e.g. remove session information)
-    // Redirect user to homepage
-    window.location.replace("/");
+    console.log("Clique sur le bouton de déconnexion...");
+
+    if (this.props.handleLogout) {
+      this.props.handleLogout(); 
+    }
   };
 
   render() {
     return (
       <Header
+
         brandTop={<>Ministère <br />de l'Intérieur <br />et des outre mer</>}
         homeLinkProps={{
           href: "/",
@@ -109,8 +123,9 @@ class HeaderApp extends Component {
               href: "#",
             },
             text: "Se déconnecter",
-            onClick: this.handleLogout,
+            onClick: this.props.handleLogout,
           },
+          
         ]}
         serviceTagline="Direction du Numérique"
         serviceTitle="Secrétariat Général"

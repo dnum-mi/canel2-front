@@ -13,24 +13,24 @@ class FormPost extends Component {
       myState[key] = ""
     };
     this.state = myState;
+    // this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  getSelectValues = async (routes) => {
+  getSelectValues = (routes) => {
     let data = {}
     for (let key in routes) {
-      await getData(`${routes[key]}?limit=20`)
+      getData(`${routes[key]}`)
       .then(response => {
-        console.log("PROMISE: ");
-        data[String(key)] = response
+        data[key] = response.results
       })
     }
-    console.log("DATA: ", data)
     return data
   }
 
-  generateForm = async (model, label) => {
-    let selectValues = await this.getSelectValues(this.props.routes)
+  generateForm = (model, label) => {
+    let selectValues = this.getSelectValues(this.props.routes)
+    console.log("BEGIN SELECT ", selectValues)
     const items = [];
     for (let key in model) {
       if (model[key] === 'checkbox') {
@@ -81,30 +81,15 @@ class FormPost extends Component {
       };
       if (model[key] == 'select') {
         // let optionsValues
-        // if (typeof selectValues !== "undefined"){
-        //   if (typeof selectValues[key] !== "undefined") {
-        //     console.log("BEFORE MAP: ", selectValues[key])
-        //     // optionsValues = (selectValues[key]).map(value => {
-        //     //   console.log("VALUE: ", value);
-        //     //   <option value={value}>{value}</option>
-        //     // })
+        // console.log("\n selectedvalues ", selectValues)
+        // if (typeof selectValues !== undefined){
+        //   if (typeof selectValues[key] !== undefined) {
+        //     optionsValues = selectValues[key].map(value => {
+        //       <option>{value}</option>
+        //     })
         //   } else {
-        //     if (key == "ministere_responsable") {
-        //       console.log("IN IF TEST")
-        //       console.log(selectValues)
-        //       console.log(JSON.parse(JSON.stringify(selectValues)))
-        //       console.log(JSON.stringify(selectValues))
-        //       console.log(Object.keys(selectValues))
-        //       console.log('IN FOR:')
-        //       for (let x in selectValues[key]) {
-        //         console.log(x)
-        //         console.log(selectValues[key][x])
-        //       }
-        //       console.log('END FOR')
-        //     }
-        //     optionsValues = <option>  </option>
+        //     optionsValues = <option>Value</option>
         //   }
-
           items.push(
             <Select
               key={key}
@@ -119,7 +104,6 @@ class FormPost extends Component {
                 
               }}
             >
-              <option value=""></option>
               {/* { optionsValues } */}
             </Select>
           )
@@ -151,28 +135,28 @@ class FormPost extends Component {
       };
     }
     return items;
+  //   return (
+  //     <Input label="Nom" state="default" name="nom_application" value="toto" onChange={(e) => this.setState({ nom_application: e.target.value})} stateRelatedMessage="Text de validation / d'explication de l'erreur" />
+  //   )
   }
 
   handleSubmit(event, table) {
     event.preventDefault();
     let data = this.state
+    console.log('\n')
+    console.log(data)
     for (let key in data) {
       if (data[key] == "") {
           data[key] = null
       }
-      if ((key == "acteurs" || key == "environnements") && typeof data[key] !== "object" ) {
+      if (key == "acteurs" || key == "environnements") {
         data[key] = [data[key]]
       }
     }
     data = JSON.stringify(data)
-     postData(table+'s/', data)
-      .then(response => {
-        for (let key in this.state) {
-          this.state[key] = ""
-        }
-        alert(response)
-      })
-      .catch(error => console.error(error));
+     postData(table, data)
+      .then(response => console.log(response))
+       .catch(error => console.error(error));
     console.log('END HANDLE SUBMIT\n');
   }
 
@@ -187,7 +171,6 @@ class FormPost extends Component {
                   <button className="fr-link--close fr-link" title="Fermer la fenêtre modale" aria-controls="fr-modal-1">Fermer</button>
                 </div>
                 <div className="fr-modal__content">
-                  <h1 id="fr-modal-title-modal-1" className="fr-modal__title">Ajouter {this.props.table}</h1>
                   <form onSubmit={(event) => this.handleSubmit(event, this.props.table)}>
                     { this.generateForm(this.props.model, this.props.label) }
                     <Button type="submit">Enregistrer</Button>

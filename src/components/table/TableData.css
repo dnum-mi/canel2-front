@@ -1,2 +1,26 @@
+.icon-cell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 
-  
+.edit-icon,
+.delete-icon {
+  margin-top: 5px;
+  cursor: pointer;
+}
+
+.icon-label {
+  margin-top: 5px;
+}
+
+.table-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.table-cell {
+  text-align: center;
+}

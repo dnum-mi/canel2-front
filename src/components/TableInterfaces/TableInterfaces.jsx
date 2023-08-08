@@ -73,14 +73,18 @@ class TableInterfaces extends Component {
     this.setState({ currentPage: pageNumber });
   };
 
-    handleOpenModal() {
-        const modal = document.getElementById('fr-modal-1');
-        modal.showModal();
+  handleOpenModal = () => {
+    const modal = document.getElementById('fr-modal-1');
+    if (!modal.open) {
+      modal.showModal();
     }
+  }
 
     handleOpenModalGet() {
         const modal = document.getElementById('fr-modal-1-get');
-        modal.showModal();
+        if (!modal.open) {
+          modal.showModal();
+        }
     }
 
    
@@ -187,8 +191,7 @@ class TableInterfaces extends Component {
             <button onClick={this.handleOpenModal} className="fr-btn" data-fr-opened="false" aria-controls="fr-modal-1">
               Ajouter
             </button>
-            <FormPost onSave={this.handleSave} model={INTERFACE_INPUT_TYPES} label={INTERFACE_LABEL}/>
-          </div>
+            <FormPost onSave={this.handleSave} model={INTERFACE_INPUT_TYPES} label={INTERFACE_LABEL}/>          </div>
           <div className="button-container-get">
             <button onClick={this.handleOpenModalGet} className="fr-btn" data-fr-opened="false" aria-controls="fr-modal-1-get">
               Obtenir Infos
