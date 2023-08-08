@@ -7,17 +7,12 @@ import { Select } from '@codegouvfr/react-dsfr/Select';
 
 class FormPost extends Component {
   constructor(props) {
-    console.log('In constructor')
     super(props);
     let myState = {}
     for (const key in this.props.model) {
       myState[key] = ""
     };
-    console.log('myState:')
-    console.log(myState)
     this.state = myState;
-    console.log(this.state)
-    console.log('END CONSTRUCTOR')
     // this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
@@ -148,6 +143,8 @@ class FormPost extends Component {
   handleSubmit(event, table) {
     event.preventDefault();
     let data = this.state
+    console.log('\n')
+    console.log(data)
     for (let key in data) {
       if (data[key] == "") {
           data[key] = null

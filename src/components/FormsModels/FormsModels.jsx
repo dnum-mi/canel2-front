@@ -55,7 +55,7 @@ export const APPLICATION_INPUT_TYPES = {
     'acteurs': 'multiselect',
     'conformite': 'select',
     'devops': 'select',
-    'environnements': 'multiselect'
+    'environnements': 'text'
 };
 
 export const APPLICATION_LABEL = {

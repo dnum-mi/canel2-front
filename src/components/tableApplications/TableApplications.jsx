@@ -188,7 +188,7 @@ class TableApplications extends Component {
             <button onClick={this.handleOpenModal} className="fr-btn" data-fr-opened="false" aria-controls="fr-modal-1">
               Ajouter
             </button>
-<FormPost onSave={this.handleSave} model={APPLICATION_INPUT_TYPES} label={APPLICATION_LABEL}/>          </div>
+<FormPost onSave={this.handleSave} model={APPLICATION_INPUT_TYPES} label={APPLICATION_LABEL} table={"applications/"}/>          </div>
 <div className="button-container-get">
         <button onClick={this.handleOpenModalGet} className="fr-btn" data-fr-opened="false" aria-controls="fr-modal-1-get">
           Obtenir Infos

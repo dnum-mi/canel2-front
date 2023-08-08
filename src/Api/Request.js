@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_BASE_URL = 'http://localhost:8000/canel/api/v1';
+const API_BASE_URL = 'http://localhost:8000/api/v1';
 
 export async function getToken(username, password) {
   const data = {
@@ -57,7 +57,7 @@ export function postData(endpoint, data) {
   const accessToken = localStorage.getItem('token');
   const headers = {
     'X-CSRFToken': getCSRFToken(),
-    
+    'Content-Type': 'application/json',
     'Authorization': `Bearer ${accessToken}`
     
   };
