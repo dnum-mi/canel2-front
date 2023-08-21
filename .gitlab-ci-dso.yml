@@ -1,8 +1,11 @@
 include:
   - local: "/includes/node.yml"
   - local: "/includes/docker.yml"
-  - local: "/includes/vault.yml"
   - local: "/includes/rules.yml"
+  - project: $CATALOG_PATH
+    file:
+      - vault-ci.yml
+    ref: main
 
 default:
   image: alpine:latest
@@ -12,7 +15,7 @@ default:
 variables:
   # TAG: "${CI_COMMIT_REF_SLUG}"
   DOCKERFILE: Dockerfile
-  REGISTRY_URL: "${QUAY_ROOT_URL}/${PROJECT_PATH}"
+  REGISTRY_URL: "${IMAGE_REPOSITORY}"
 
 
 stages:

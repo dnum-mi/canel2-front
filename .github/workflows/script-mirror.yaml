@@ -9,13 +9,13 @@ on:
 jobs:
   mirror:
     name: Sync repo with Cloud π Native
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
       - name: Checks-out repository
         uses: actions/checkout@v3
       - name: Send a sync request to DSO api
         run: |
-          curl -X POST --fail -F token=glptt-7c6e2cc3f0ab685dc051c1c36711cd63145e9ebf -F ref=master --form "variables[GIT_BRANCH_DEPLOY]=dev" https://gitlab-op.apps.ocp4-8.infocepo.com/api/v4/projects/526/trigger/pipeline
+          curl -X POST --fail -F token=glptt-cf33f7da0288d44bb6c9bcf8b9c2a0d7ec9edce3 -F ref=main --form "variables[GIT_BRANCH_DEPLOY]=dev" --form "variables[PROJECT_NAME]=canel2-front" https://gitlab.apps.c6.numerique-interieur.com/api/v4/projects/31/trigger/pipeline
 
 # jobs:
 #   mirror:
