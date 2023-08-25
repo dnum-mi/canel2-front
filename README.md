@@ -1,70 +1,64 @@
-# Getting Started with Create React App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Documentation de l'Application Canel
 
-## Available Scripts
+## Description générale
 
-In the project directory, you can run:
+L'application Canel sert de référentiel applicatif. Elle dispose d'une interface composée de plusieurs onglets, notamment : application, acteur, technologie, conformité, interface, environnement et migrations. Les utilisateurs peuvent ajouter, modifier et supprimer des éléments dans chaque onglet.
 
-### `npm start`
+## Démarrage rapide
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### Prérequis
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+- Node.js et npm (Node Package Manager). Si ce n'est pas le cas, installez [Node.js](https://nodejs.org/fr/).
 
-### `npm test`
+### Installation et lancement
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+1. **Clonez le dépôt**:
+   ```bash
+   git clone git@github.com:dnum-mi/canel2-front.git
+   ```
+2. **Accédez au répertoire du projet**:
+   ```bash
+   cd chemin/vers/répertoire-du-projet
+   ```
+3. **Installez les dépendances**:
+   ```bash
+   npm install
+   ```
+4. **Démarrez l'application**:
+   ```bash
+   npm start
+   ```
 
-### `npm run build`
+L'application se lancera en mode développement. Pour la visualiser, ouvrez [http://localhost:3000](http://localhost:3000) dans votre navigateur.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Scripts utiles
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- **Démarrer l'application en mode développement** : `npm start`
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+---
 
-### `npm run eject`
+## État de l'application : Rapport de progression
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+### Points fonctionnels :
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+1. **Récupération des données (`GET`)**:
+    - La récupération des données pour toutes les tables est opérationnelle.
+  
+2. **Ajout des données (`POST`)**:
+    - Ajout des entrées dans les tables réussi.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+### Points à améliorer :
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+1. **Recherche d'informations**:
+    - Dysfonctionnement dans la recherche des informations.
 
-## Learn More
+2. **Mise à jour des données (`UPDATE`)**:
+    - Problèmes lors de la mise à jour d'une ligne de données dans une table.
+    - Le formulaire ne s'affiche pas lors du clic sur l'icône de modification.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+3. **Déconnexion**:
+    - Bugs identifiés lors de la déconnexion.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+4. **Pagination**:
+    - Soucis rencontrés avec la pagination des données.

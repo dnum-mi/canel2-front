@@ -2,8 +2,9 @@ import React, { Component } from "react";
 import { getData, postData } from '../../Api/Request';
 import TableData from "../table/TableData";
 import FormPost from "../FormPost/FormPost";
+import FormUpdate from "../FormUpdate/FormUpdate";
 import Pagination from "../Pagination";
-import {  ENVIRONNEMENT_INPUT_TYPES, ENVIRONNEMENT_LABEL } from "../FormsModels/FormsModels";
+import { ENVIRONNEMENT_INPUT_TYPES, ENVIRONNEMENT_LABEL } from "../FormsModels/FormsModels";
 import FormGet from "../FormGet/FormGet";
 
 class TableEnvironnements extends Component {
@@ -16,6 +17,7 @@ class TableEnvironnements extends Component {
       currentPage: 1,
       totalPages: 0,
       totalItems: 0,
+      currentDataToEdit: null,
     };
   }
 
@@ -28,7 +30,6 @@ class TableEnvironnements extends Component {
     const { itemsPerPage, currentPage } = this.state;
     const offset = (currentPage - 1) * itemsPerPage;
     getData(`environnements?offset=${offset}&limit=${itemsPerPage}`)
-    
       .then(response => {
         const totalPages = Math.ceil(response.total / itemsPerPage);
         this.setState({ data: response.results, loading: 'false', totalPages, totalItems: response.total });
@@ -36,18 +37,22 @@ class TableEnvironnements extends Component {
       .catch(error => console.error(error));
   }
 
-  handlePageChange = (newPage) => {
-    this.setState({ currentPage: newPage }, () => {
-      this.fetchData();
-    });
-  };
-
   handleOpenModal = () => {
     const modal = document.getElementById('fr-modal-1');
     if (!modal.open) {
       modal.showModal();
     }
   }
+
+  handleOpenUpdateModal = (data) => {
+    this.setState({ currentDataToEdit: data });
+    const modal = document.getElementById('fr-modal-update');
+    if (!modal.open) {
+      modal.showModal();
+    }
+  }
+
+
 
   handleSave = () => {
     const form = document.getElementById('form-post');
@@ -70,27 +75,29 @@ class TableEnvironnements extends Component {
     const { data, currentPage, totalPages, totalItems, itemsPerPage } = this.state;
     return (
       <div className="table-acteurs-container">
-      <TableData data={data} />
-      <div className="button-container">
-        <button onClick={this.handleOpenModal} className="fr-btn" data-fr-opened="false" aria-controls="fr-modal-1">
-          Ajouter
-        </button>
-<FormPost onSave={this.handleSave} model={ENVIRONNEMENT_INPUT_TYPES} label={ENVIRONNEMENT_LABEL}/>          </div>
-      <div className="button-container-get">
-        <button onClick={this.handleOpenModalGet} className="fr-btn" data-fr-opened="false" aria-controls="fr-modal-1-get">
-          Obtenir Infos
-        </button>
-        <FormGet onSave={this.handleSaveGet} parentStateHandler={this.parentStateHandler} />
-      </div>
-      <Pagination
-        currentPage={currentPage}
-        totalPages={totalPages}
-        totalItems={totalItems}
-        itemsPerPage={itemsPerPage}
-        handlePageChange={this.handlePageChange}
-      />
-    </div>
+        <TableData data={data} onEdit={this.handleOpenEditModal} />
+        <div className="button-container">
+          <button onClick={this.handleOpenModal} className="fr-btn" data-fr-opened="false" aria-controls="fr-modal-1">
+            Ajouter
+          </button>
+          <FormPost onSave={this.handleSave} model={ENVIRONNEMENT_INPUT_TYPES} label={ENVIRONNEMENT_LABEL} table="environnements/" />
+        </div>
+        <div className="button-container-get">
+          <button onClick={this.handleOpenModalGet} className="fr-btn" data-fr-opened="false" aria-controls="fr-modal-1-get">
+            Obtenir Infos
+          </button>
+          <FormGet onSave={this.handleSaveGet} parentStateHandler={this.parentStateHandler} />
+        </div>
 
+
+        <Pagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          totalItems={totalItems}
+          itemsPerPage={itemsPerPage}
+          handlePageChange={this.handlePageChange}
+        />
+      </div>
     );
   }
 }

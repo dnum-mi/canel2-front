@@ -103,18 +103,15 @@ class TableConformites extends Component {
     }
     
     parentStateHandler = (newState) => {
-        console.log('In Parent !');
         console.log(newState);
         getData('conformites?nom_application=App_Test')
             .then(response => {
                     let filtered_data = response.results.map(this.filter_headers);
-                    console.log('Final response')
                     console.log(response);
                     this.setState({ data: filtered_data, loading: 'false' });
                 }
             )
             .catch(error => console.error(error));
-        //this.setState({ data: newState, loading: 'false' });
     }
 
     get_query_parameters = (data) => {
@@ -187,7 +184,7 @@ class TableConformites extends Component {
             <button onClick={this.handleOpenModal} className="fr-btn" data-fr-opened="false" aria-controls="fr-modal-1">
               Ajouter
             </button>
-            <FormPost onSave={this.handleSave} model={CONFORMITE_INPUT_TYPES} label={CONFORMITE_LABEL}/>
+            <FormPost onSave={this.handleSave} model={CONFORMITE_INPUT_TYPES} label={CONFORMITE_LABEL} table="conformites/"/>
           </div>
           <div className="button-container-get">
             <button onClick={this.handleOpenModalGet} className="fr-btn" data-fr-opened="false" aria-controls="fr-modal-1-get">

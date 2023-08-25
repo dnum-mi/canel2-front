@@ -162,29 +162,27 @@ export const DEVOPS_LABEL = {
     Environnement model
 */
 export const ENVIRONNEMENT_INPUT_TYPES = {
-    'archivee':'checkbox',
-    'cloud_hebergeur':'select',
-    'environnnement':'text',
-    'FIP':'text',
-    'interface_id':'text',
-    'migration':'select',
-    'technologie':'multiselect',
+    'commentaire':'text',
+    'label':'text',
+    'organisation':'text',
+    'localisation':'text',
+    'status':'text',
+    'type':'text',
+    'technologie':'text',
     'tenant':'text',
-    'type_hebergement':'select',
-    'url':'text'
+   
 }; 
 
 export const ENVIRONNEMENT_LABEL = {
-    'archivee':'Archivé',
-    'cloud_hebergeur':'Cloud hébergeur',
-    'environnement':'Environnement',
-    'FIP':'FIP',
-    'interface_id':'ID interface',
-    'migration':'Migration',
+    'commentaire':'commentaire',
+    'label':'label',
+    'organistation':'organistation',
+    'localisation':'localisation',
+    'status':'status',
+    'type':'type',
     'technologie':'Technologie',
-    'tenant':'Tenant',
-    'type_hebergement':"Type d'hébergement",
-    'url':'URL'
+    'tenant':'tenant',
+  
 }; 
 
 /*

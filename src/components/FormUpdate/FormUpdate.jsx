@@ -1,97 +1,175 @@
 import React, { Component } from 'react';
-import { updateData } from '../../Api/Request';
+import { getData, postData } from '../../Api/Request';
 import { Button } from '@codegouvfr/react-dsfr/Button';
 import { Input } from '@codegouvfr/react-dsfr/Input';
+import { RadioButtons } from '@codegouvfr/react-dsfr/RadioButtons';
+import { Select } from '@codegouvfr/react-dsfr/Select';
 
 class FormUpdate extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      nom_application: '',
-      description: '',
-      application_statut: '',
-      date_mise_en_production: '',
-      ministere_responsable: '',
-      sensibilite: ''
-    };
+
+    let myState = {};
+    for (const key in this.props.model) {
+      myState[key] = this.props.currentData && this.props.currentData[key] ? this.props.currentData[key] : "";
+    }
+    this.state = { ...myState, selectData: {} };
+
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  handleSubmit = (e) => {
-    e.preventDefault();
-    const { nom_application, description, application_statut, date_mise_en_production, ministere_responsable, sensibilite } = this.state;
-    const data = { nom_application, description, application_statut, date_mise_en_production, ministere_responsable, sensibilite };
+  componentDidMount() {
+    if (this.props.routes) {
+      this.getSelectValues(this.props.routes);
+    }
+  }
 
-    updateData(`app/zedf/update/`)
-      .then(response => console.log(response))
-      .catch(error => console.error(error));
+  async getSelectValues(routes) {
+    try {
+      let promises = [];
+      for (let key in routes) {
+        promises.push(getData(`${routes[key]}`).then(response => ({ key, data: response.results })));
+      }
+      let results = await Promise.all(promises);
+      let selectData = {};
+      results.forEach(result => {
+        selectData[result.key] = result.data;
+      });
+      this.setState({ selectData });
+    } catch (error) {
+      console.error("Erreur lors de la récupération des données pour les éléments Select :", error);
+    }
+  }
 
-    this.props.closeUpdateModal();
-   
-  };
+  generateForm(model, label) {
+    const items = [];
+    for (let key in model) {
+      const currentVal = this.state[key];
+      switch (model[key]) {
+        case 'checkbox':
+          items.push(
+            <RadioButtons
+              legend={label[key]}
+              value={currentVal}
+              onChange={(e) => {
+                this.setState({ [key]: e.target.value });
+              }}
+              options={[
+                {
+                  label: "Non",
+                  nativeInputProps: {
+                    value: 0
+                  }
+                },
+                {
+                  label: "Oui",
+                  nativeInputProps: {
+                    value: 1
+                  }
+                }
+              ]}
+              orientation="horizontal"
+            />
+          );
+          break;
+        case 'date':
+          items.push(
+            <Input
+              label={label[key]}
+              key={key}
+              value={currentVal}
+              onChange={(e) => {
+                this.setState({ [key]: e.target.value });
+              }}
+              nativeInputProps={{
+                type: 'date'
+              }}
+            />
+          );
+          break;
+        case 'select':
+          items.push(
+            <Select
+              key={key}
+              label={label[key]}
+              value={currentVal}
+              onChange={(e) => {
+                this.setState({ [key]: e.target.value });
+              }}
+            >
+              {this.state.selectData && this.state.selectData[key] && this.state.selectData[key].map((option, index) => (
+                <option key={index} value={option.value}>{option.label}</option>
+              ))}
+            </Select>
+          );
+          break;
+        case 'text':
+        case 'uuid':
+          items.push(
+            <Input
+              label={label[key]}
+              key={key}
+              name={key}
+              value={currentVal}
+              onChange={(e) => {
+                this.setState({ [key]: e.target.value });
+              }}
+            />
+          );
+          break;
+        default:
+          console.warn(`Type non reconnu pour le modèle: ${model[key]}`);
+          break;
+      }
+    }
+    return items;
+  }
+
+  handleSubmit(event) {
+    event.preventDefault();
+    let data = { ...this.state };
+    delete data.selectData;
+
+    for (let key in data) {
+      if (data[key] === "") {
+        data[key] = null;
+      }
+      if (key === "acteurs" || key === "environnements") {
+        data[key] = [data[key]];
+      }
+    }
+
+    postData(this.props.table, JSON.stringify(data))
+      .then(response => {
+        console.log("Réponse après POST :", response);
+      })
+      .catch(error => {
+        console.error("Erreur lors de l'envoi de données :", error);
+      });
+  }
 
   render() {
-    const { nom_application, description, application_statut, date_mise_en_production, ministere_responsable, sensibilite } = this.state;
+
     return (
-      <dialog aria-labelledby="fr-modal-title-modal-1" role="dialog" id="fr-modal-1-update" className="fr-modal">
         <div className="fr-container fr-container--fluid fr-container-md">
           <div className="fr-grid-row fr-grid-row--center">
             <div className="fr-col-12 fr-col-md-8 fr-col-lg-6">
               <div className="fr-modal__body">
                 <div className="fr-modal__header">
-                  <button className="fr-link--close fr-link" title="Fermer la fenêtre modale" aria-controls="fr-modal-1-update" onClick={this.props.closeUpdateModal}>
-                    Fermer
-                  </button>
+                  <button className="fr-link--close fr-link" title="Fermer la fenêtre modale" aria-controls="fr-modal-1" onClick={this.props.closeUpdateModal}>Fermer</button>
                 </div>
                 <div className="fr-modal__content">
-                  <h1 id="fr-modal-title-modal-1" className="fr-modal__title">Modifier une Application</h1>
+                  <p>Test: Est-ce que ce texte s'affiche ?</p>
                   <form onSubmit={this.handleSubmit}>
-                    <Input label="Nom" state="default" name="nom_application" value={nom_application} onChange={(e) => this.setState({ nom_application: e.target.value })} stateRelatedMessage="Text de validation / d'explication de l'erreur" />
-                    <Input label="Description" state="default" name="description" value={description} onChange={(e) => this.setState({ description: e.target.value })} stateRelatedMessage="Text de validation / d'explication de l'erreur" />
-
-                 {/* <Input label="Nom" state="default" name="nom_application" value={nom_application} onChange={(e) => this.setState({ nom_application: e.target.value})} stateRelatedMessage="Text de validation / d'explication de l'erreur" />
-                    <Input label="Description" state="default" name="description" value={description} onChange={(e) => this.setState({ description: e.target.value})}  stateRelatedMessage="Text de validation / d'explication de l'erreur" /> */}
-
-                    {/* <Input label="Nom" state="default" name="nom_application" value={nom_application} onChange={(e) => console.log(e.target.value)} stateRelatedMessage="Text de validation / d'explication de l'erreur" />
-                    <Input label="Description" state="default" name="description" value={description} onChange={(e) => console.log(e.target.value)}  stateRelatedMessage="Text de validation / d'explication de l'erreur" /> */}
-
-<select className="fr-select" id="select" name="select" value={application_statut} onChange={(e) => this.setState({ application_statut: e.target.value })}>
-          <option value="Décommissionnée">Décommissionnée</option>
-          <option value="En construction">En construction</option>
-          <option value="En cours de retrait">En cours de retrait</option>
-          <option value="En production">En production</option>
-          <option value="Identifiée dans la trajectoire">Identifiée dans la trajectoire</option>
-          <option value="Mise en extinction">Mise en extinction</option>
-        </select>
-        <Input label="Date" state="default" name="date_mise_en_production" value={date_mise_en_production} onChange={(e) => this.setState({ date_mise_en_production: e.target.value })}  stateRelatedMessage="Text de validation / d'explication de l'erreur" />
-        <select className="fr-select" id="select" name="select" value={sensibilite} onChange={(e) => this.setState({ sensibilite: e.target.value })}>
-          <option value="S1">S1</option>
-          <option value="S2">S2</option>
-          <option value="S3">S3</option>
-          <option value="S4">S4</option>
-        </select>
-        <select className="fr-select" id="select" name="select" value={ministere_responsable} onChange={(e) => this.setState({ ministere_responsable: e.target.value })}>
-          <option value="direction d'information legale et administrative">dir. d'information legale et administrative</option>
-          <option value="direction interministerielle numerique">dir interministerielle numerique</option>
-          <option value="mi - gendaremerie nationale">mi - gendaremerie nationale</option>
-          <option value="mi - préfecture de police">mi - préfecture de police</option>
-          <option value="ministère affaires sociaux">ministère affaires sociaux</option>
-          <option value="ministère de l'economie et des finances et de la souveraineté industrielle et numérique">min. de l'economie et des finances et de la souveraineté industrielle et numérique</option>
-          <option value="ministère de l'education nationale">min. de l'education nationale</option>
-          <option value="ministere de l'interieur">min. de l'interieur</option>
-          <option value="ministère de la justice">min. de la justice</option>
-          <option value="ministère de la transition ecologique et de la cohesion des territoires">min. de la transition ecologique et de la cohesion des territoires</option>
-          <option value="ministère des affaires etrangères">min. des affaires etrangères</option>
-          <option value="ministère des armées">min. des armées</option>
-        </select>
-
-                    <Button type="submit">Enregistrer</Button>
+                    {this.generateForm(this.props.model, this.props.label)}
+                    <Button type="submit">Mettre à jour</Button>
                   </form>
                 </div>
+
               </div>
             </div>
           </div>
         </div>
-      </dialog>
     );
   }
 }

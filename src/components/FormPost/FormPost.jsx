@@ -7,18 +7,12 @@ import { Select } from '@codegouvfr/react-dsfr/Select';
 
 class FormPost extends Component {
   constructor(props) {
-    console.log('In constructor')
     super(props);
     let myState = {}
     for (const key in this.props.model) {
       myState[key] = ""
     };
-    console.log('myState:')
-    console.log(myState)
     this.state = myState;
-    console.log(this.state)
-    console.log('END CONSTRUCTOR')
-    // this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
@@ -35,7 +29,6 @@ class FormPost extends Component {
 
   generateForm = (model, label) => {
     let selectValues = this.getSelectValues(this.props.routes)
-    console.log("BEGIN SELECT ", selectValues)
     const items = [];
     for (let key in model) {
       if (model[key] === 'checkbox') {
@@ -82,19 +75,8 @@ class FormPost extends Component {
         )
       };
       if (model[key] == 'multiselect') {
-        console.log('multiselect')
       };
       if (model[key] == 'select') {
-        // let optionsValues
-        // console.log("\n selectedvalues ", selectValues)
-        // if (typeof selectValues !== undefined){
-        //   if (typeof selectValues[key] !== undefined) {
-        //     optionsValues = selectValues[key].map(value => {
-        //       <option>{value}</option>
-        //     })
-        //   } else {
-        //     optionsValues = <option>Value</option>
-        //   }
           items.push(
             <Select
               key={key}
@@ -140,9 +122,6 @@ class FormPost extends Component {
       };
     }
     return items;
-  //   return (
-  //     <Input label="Nom" state="default" name="nom_application" value="toto" onChange={(e) => this.setState({ nom_application: e.target.value})} stateRelatedMessage="Text de validation / d'explication de l'erreur" />
-  //   )
   }
 
   handleSubmit(event, table) {
@@ -160,13 +139,12 @@ class FormPost extends Component {
      postData(table, data)
       .then(response => console.log(response))
        .catch(error => console.error(error));
-    console.log('END HANDLE SUBMIT\n');
   }
 
   render() {
     return (
-      <dialog aria-labelledby="fr-modal-title-modal-1" role="dialog" id="fr-modal-1" className="fr-modal">
-        <div className="fr-container fr-container--fluid fr-container-md">
+<dialog aria-labelledby="fr-modal-title-modal-post" role="dialog" id="fr-modal-1" className="fr-modal">
+          <div className="fr-container fr-container--fluid fr-container-md">
           <div className="fr-grid-row fr-grid-row--center">
             <div className="fr-col-12 fr-col-md-8 fr-col-lg-6">
               <div className="fr-modal__body">

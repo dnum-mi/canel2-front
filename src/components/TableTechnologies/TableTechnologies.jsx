@@ -174,7 +174,7 @@ class TableTechnologies extends Component {
     }
 
     render() {
-      const { data, currentPage, totalPages, totalItems, itemsPerPage } = this.state;
+      const { actorToEdit,data, currentPage, totalPages, totalItems, itemsPerPage } = this.state;
   
       if (this.state.loading === 'initial') {
         return <h2>Intializing...</h2>;
@@ -187,10 +187,25 @@ class TableTechnologies extends Component {
         <div className="table-acteurs-container">
           <TableData data={data} />
           <div className="button-container">
-            <button onClick={this.handleOpenModal} className="fr-btn" data-fr-opened="false" aria-controls="fr-modal-1">
-              Ajouter
-            </button>
-            <FormPost onSave={this.handleSave} model={TECHNOLOGIE_INPUT_TYPES} label={TECHNOLOGIE_LABEL}/>          </div>
+              <button onClick={this.handleOpenAddModal} className="fr-btn" data-fr-opened="false" aria-controls="fr-modal-1">
+                  Ajouter
+              </button>
+              <FormPost
+                  onSave={this.handleSave}
+                  model={TECHNOLOGIE_INPUT_TYPES}
+                  label={TECHNOLOGIE_LABEL}
+                  table="acteurs/"
+                  initialValues={actorToEdit}
+              />
+              {actorToEdit && 
+ <FormUpdate
+     onSave={this.handleUpdate}
+     model={TECHNOLOGIE_INPUT_TYPES}
+     label={TECHNOLOGIE_LABEL}
+     table="acteurs/"
+     initialValues={actorToEdit}
+ />}
+          </div>
           <div className="button-container-get">
             <button onClick={this.handleOpenModalGet} className="fr-btn" data-fr-opened="false" aria-controls="fr-modal-1-get">
               Obtenir Infos

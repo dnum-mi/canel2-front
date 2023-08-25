@@ -4,10 +4,11 @@ import { getData, deleteData } from '../../Api/Request';
 import FormUpdate from '../FormUpdate/FormUpdate';
 import SidePanel from '../SidePanel/SidePanel';
 import Modal from 'react-modal';
-// Vérifier les importations des fichiers SVG pour les icônes et corriger si nécessaire
 import { ReactComponent as EditIcon } from '../../img/ball-pen-line.svg';
 import { ReactComponent as DeleteIcon } from '../../img/delete-bin-line.svg';
 import { ReactComponent as ExportIcon } from '../../img/download-line.svg';
+import { ENVIRONNEMENT_INPUT_TYPES, ENVIRONNEMENT_LABEL } from "../FormsModels/FormsModels";
+
 
 import './TableData.css';
 
@@ -34,18 +35,24 @@ class TableData extends Component {
     this.state = {
       selectedId: null,
       selectedItem: null,
-      modalIsOpen: false,
+      detailsModalIsOpen: false,
+      updateModalIsOpen: false,
       currentElement: null,
     };
+
   }
 
   openModal = (id, item) => {
-    this.setState({ selectedId: id, selectedItem: item, modalIsOpen: true });
+    this.setState({ selectedId: id, selectedItem: item, detailsModalIsOpen: true });
   };
 
   closeModal = () => {
-    this.setState({ modalIsOpen: false });
+    this.setState({
+      detailsModalIsOpen: false,
+      updateModalIsOpen: false
+    });
   };
+
 
   handleRowClick = (id, item) => {
     this.openModal(id, item);
@@ -65,17 +72,8 @@ class TableData extends Component {
     }
   };
 
-  openUpdateModal = (id) => {
-    const elementToUpdate = this.props.data.find((element) => element.id === id);
-  
-    if (elementToUpdate) {
-      this.setState({
-        currentElement: elementToUpdate,
-        modalIsOpen: true,
-      });
-    } else {
-      console.error("Élément non trouvé pour l'ID :", id);
-    }
+  openUpdateModal = (element) => {
+    this.setState({ updateModalIsOpen: true, currentElement: element });
   };
 
   renderTableHeader() {
@@ -136,12 +134,12 @@ class TableData extends Component {
             {item[id_key] && (
               <div className="icon-cell">
                 <EditIcon
-  className="edit-icon"
-  onClick={(event) => {
-    event.stopPropagation();
-    this.openUpdateModal(item[id_key]);
-  }}
-/>
+                  className="edit-icon"
+                  onClick={(event) => {
+                    event.stopPropagation();
+                    this.openUpdateModal(item);
+                  }}
+                />
               </div>
             )}
           </td>
@@ -191,22 +189,48 @@ class TableData extends Component {
             <tbody>{this.renderTableData()}</tbody>
           </table>
         </div>
-        <FormUpdate id="fr-modal-1-update" selectedId={this.state.selectedId} />
+
+        {/* Modale pour l'affichage des détails */}
         <Modal
-          isOpen={this.state.modalIsOpen}
+          isOpen={this.state.detailsModalIsOpen}
           onRequestClose={this.closeModal}
           style={customStyles}
-          contentLabel="Exemple de modale"
+          contentLabel="Détails de l'élément"
         >
-          <FormUpdate
-            id="fr-modal-1-update"
-            selectedId={this.state.selectedId}
-            closeUpdateModal={this.closeModal}
-            currentElement={this.state.currentElement}
-          />
           <SidePanel item={this.state.selectedItem} />
           <Button onClick={this.closeModal}>Fermer</Button>
         </Modal>
+
+        {/* Modale pour la mise à jour */}
+        <dialog
+          aria-labelledby="fr-modal-title-modal-update"
+          role="dialog"
+          id="fr-modal-update"
+          className="fr-modal"
+          open={this.state.updateModalIsOpen}
+        >
+          <div className="fr-container fr-container--fluid fr-container-md">
+            <div className="fr-grid-row fr-grid-row--center">
+              <div className="fr-col-12 fr-col-md-8 fr-col-lg-6">
+                <div className="fr-modal__body">
+                  <div className="fr-modal__header">
+                    <button className="fr-link--close fr-link" title="Fermer la fenêtre modale" aria-controls="fr-modal-1" onClick={this.closeModal}>Fermer</button>
+                  </div>
+                  <div className="fr-modal__content">
+                    <FormUpdate
+                      currentData={this.state.currentDataToEdit}
+                      model={ENVIRONNEMENT_INPUT_TYPES}
+                      label={ENVIRONNEMENT_LABEL}
+                      table="environnements/"
+                      closeUpdateModal={this.closeModal}
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </dialog>
+
         <div
           style={{ display: 'inline-flex', alignItems: 'center', cursor: 'pointer' }}
           onClick={this.exportToCSV}
@@ -220,3 +244,4 @@ class TableData extends Component {
 }
 
 export default TableData;
+

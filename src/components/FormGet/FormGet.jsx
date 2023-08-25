@@ -15,23 +15,7 @@ class FormGet extends Component {
       ministere_responsable:"min. de l'interieur",
       sensibilite:"",
     };
-
-    // this.handleChange = this.handleChange.bind(this);
-    //this.handleSubmit = this.handleSubmit.bind(this);
   }
-
-//   handleChange(event) {
-//     const { name, value } = event.target;
-//     const { description, values } = event.target;
-
-//     console.log("name: ", name);
-//     console.log("value: ", value);
-//     console.log("description: ", description);
-//     console.log("values: ", values);
-//     this.setState({ [name]: value });
-//     this.setState({ [description]: values });
-//     console.log([name])
-//   }
 
     get_query_parameters = (data) => {
         const filtered_params = Object.keys(data)
@@ -62,14 +46,9 @@ class FormGet extends Component {
         ministere_responsable:"",
         sensibilite:""
     });
-    console.log(data)
   }
 
   handleSubmitGet = () => {
-    console.log('In handle get submit')
-    //event.preventDefault();
-    //const { nom_application, description, application_statut, date_mise_en_production, ministere_responsable, sensibilite } = this.state;
-    //const data = { nom_application, description, application_statut, date_mise_en_production, ministere_responsable, sensibilite };
     getData('applications?nom_application=App_Test')
             .then(response => {
                     console.log('Receive response');

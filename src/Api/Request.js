@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_BASE_URL = 'http://localhost:8000/canel/api/v1';
+const API_BASE_URL = 'http://localhost:8000/api/v1';
 
 export async function getToken(username, password) {
   const data = {
@@ -23,7 +23,7 @@ export async function getToken(username, password) {
       throw new Error('Request failed with status code ' + response.status);
     }
     const jsonresponse = await response.json();
-    console.log(jsonresponse); // Vérifier que le token est présent dans la réponse
+    console.log(jsonresponse);
     return jsonresponse;
   } catch (error) {
     console.error('Error:', error);
@@ -57,7 +57,7 @@ export function postData(endpoint, data) {
   const accessToken = localStorage.getItem('token');
   const headers = {
     'X-CSRFToken': getCSRFToken(),
-    
+    'Content-Type': 'application/json',
     'Authorization': `Bearer ${accessToken}`
     
   };
@@ -90,7 +90,7 @@ export function updateData(endpoint, data) {
 async function getCSRFToken() {
   const accessToken = localStorage.getItem('token');
   if (!accessToken) {
-    return '<csrf_token_very_long_string_goes_here>'; // Remplacez par la valeur par défaut du token CSRF
+    return '<csrf_token_very_long_string_goes_here>';
   }
 
   const headers = {
@@ -102,7 +102,7 @@ async function getCSRFToken() {
     return response.data.csrf_token;
   } catch (error) {
     console.error('Erreur lors de la récupération du token CSRF:', error);
-    return '<csrf_token_very_long_string_goes_here>'; // Remplacez par la valeur par défaut du token CSRF
+    return '<csrf_token_very_long_string_goes_here>';
   }
 }
 

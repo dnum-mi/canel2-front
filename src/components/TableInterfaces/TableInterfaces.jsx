@@ -191,7 +191,7 @@ class TableInterfaces extends Component {
             <button onClick={this.handleOpenModal} className="fr-btn" data-fr-opened="false" aria-controls="fr-modal-1">
               Ajouter
             </button>
-            <FormPost onSave={this.handleSave} model={INTERFACE_INPUT_TYPES} label={INTERFACE_LABEL}/>          </div>
+            <FormPost onSave={this.handleSave} model={INTERFACE_INPUT_TYPES} label={INTERFACE_LABEL} table="interfaces/"/>          </div>
           <div className="button-container-get">
             <button onClick={this.handleOpenModalGet} className="fr-btn" data-fr-opened="false" aria-controls="fr-modal-1-get">
               Obtenir Infos
