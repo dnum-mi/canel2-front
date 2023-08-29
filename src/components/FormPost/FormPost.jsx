@@ -127,6 +127,8 @@ class FormPost extends Component {
   handleSubmit(event, table) {
     event.preventDefault();
     let data = this.state
+    console.log('\n')
+    console.log(data)
     for (let key in data) {
       if (data[key] == "") {
           data[key] = null
